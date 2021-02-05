@@ -1,0 +1,4 @@
+name = "stdlib_string"
+
+[dependencies]
+stdlib.git = "https://github.com/lkedward/stdlib-fpm.git"
