@@ -1,6 +1,12 @@
 # String support for the [Fortran standard library](https://github.com/fortran-lang/stdlib)
 
+[![CI](https://github.com/awvwgk/stdlib_string/workflows/CI/badge.svg)](https://github.com/awvwgk/stdlib_string/actions)
+[![docs](https://github.com/awvwgk/stdlib_string/workflows/docs/badge.svg)](https://awvwgk.github.io/stdlib_string)
+
 This project contains an exploratory implementation for functional string handling.
+
+For the original thread on string support continue the discussion in
+[stdlib#69](https://github.com/fortran-lang/stdlib/issues/69).
 
 
 ## Building

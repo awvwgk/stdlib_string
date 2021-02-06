@@ -9,6 +9,8 @@
 !> character variable or literal by invoking its constructor or by assigning it
 !> to a string type. Generally, the string type behaves similar to a deferred
 !> length character in most regards but adds memory access safety.
+!>
+!> The specification of this module is available [here](../page/specs/stdlib_string_type.html).
 module stdlib_string_type
     implicit none
     private

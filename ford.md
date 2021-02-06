@@ -1,6 +1,6 @@
 ---
 project: stdlib_string
-summary: A community driven standard library for (modern) Fortran
+summary: String support for the Fortran standard library
 src_dir: src
 exclude_dir: tests
 output_dir: API-doc
@@ -24,10 +24,8 @@ extra_mods: iso_fortran_env:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORT
             iso_c_binding:https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fC_005fBINDING.html#ISO_005fC_005fBINDING
 print_creation_date: true
 creation_date: %Y-%m-%d %H:%M %z
-project_github: https://github.com/fortran-lang/stdlib
-project_download: https://github.com/fortran-lang/stdlib/archive/master.zip
-project_website: https://stdlib.fortran-lang.org
-favicon: doc/media/favicon.ico
+project_github: https://github.com/awvwgk/stdlib_string
+project_website: https://awvwgk.github.io/stdlib_string
 license: by-sa
 author: fortran-lang/stdlib contributors
 author_pic: https://fortran-lang.org/assets/img/fortran_logo_512x512.png

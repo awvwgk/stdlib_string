@@ -13,7 +13,7 @@ of characters compatible with most Fortran intrinsic character procedures as
 well as operators for working with character variables and constants.
 
 
-## Derived types provided by `stdlib_string_type`
+## Derived types provided
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -28,7 +28,7 @@ is implementation dependent and not visible for the user of the module.
 Experimental
 
 
-## Procedures and methods provided by `stdlib_string_type`
+## Procedures and methods provided
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -40,13 +40,9 @@ The module defines a default constructor to create an empty string type.
 
 Creates a string instance representing an empty string.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-string = string_type()
-! len(string) == 0
-```
+`res = [[stdlib_string_type(module):string_type(interface)]] ()`
 
 #### Status
 
@@ -64,6 +60,17 @@ None.
 
 The result is an instance of `string_type`.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+string = string_type()
+! len(string) == 0
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Constructor from character scalar
@@ -77,15 +84,9 @@ Creates a string instance representing the input character scalar value.
 The constructor shall create an empty string if an unallocated deferred-length
 character variable is passed.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-string = string_type("Sequence")
-! len(string) == 8
-string = string_type(" S p a c e d ")
-! len(string) == 9
-```
+`res = [[stdlib_string_type(module):string_type(interface)]] (string)`
 
 #### Status
 
@@ -97,11 +98,24 @@ Elemental function.
 
 #### Argument
 
-`chars`: shall be a scalar character value. It is an `intent(in)` argument.
+`string`: shall be a scalar character value. It is an `intent(in)` argument.
 
 #### Result value
 
 The result is an instance of `string_type`.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+string = string_type("Sequence")
+! len(string) == 8
+string = string_type(" S p a c e d ")
+! len(string) == 9
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -114,13 +128,9 @@ from an array of characters. The character array is flattend.
 
 Creates a string instance representing the flattend input array of characters.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-string = string_type(["S", "e", "q", "u", "e", "n", "c", "e"])
-! len(string) == 8
-```
+`res = [[stdlib_string_type(module):string_type(interface)]] (chars)`
 
 #### Status
 
@@ -138,6 +148,26 @@ Pure function.
 
 The result is an instance of `string_type`.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+string = string_type(["S", "e", "q", "u", "e", "n", "c", "e"])
+! len(string) == 8
+end
+```
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+string = string_type(["S", "e", "q", "u", "e", "n", "c", "e"])
+! len(string) == 8
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Assignment of character scalar
@@ -149,14 +179,9 @@ from a character scalar.
 
 Creates a string instance representing the right-hand-side character scalar value.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-! len(string) == 0
-string = "Sequence"
-! len(string) == 8
-```
+`lhs = rhs`
 
 #### Status
 
@@ -164,7 +189,19 @@ Experimental
 
 #### Class
 
-Pure assignment.
+Elemntal subroutine, `assignment(=)`.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+! len(string) == 0
+string = "Sequence"
+! len(string) == 8
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -177,14 +214,9 @@ from an array of characters
 
 Creates a string instance representing the flattend right-hand-side array of characters.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-! len(string) == 0
-string = ["S", "e", "q", "u", "e", "n", "c", "e"]
-! len(string) == 8
-```
+`lhs = rhs`
 
 #### Status
 
@@ -192,7 +224,19 @@ Experimental
 
 #### Class
 
-Pure assignment.
+Pure subroutine, `assignment(=)`.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+! len(string) == 0
+string = ["S", "e", "q", "u", "e", "n", "c", "e"]
+! len(string) == 8
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -202,20 +246,9 @@ Pure assignment.
 
 Returns the length of the character sequence represented by the string.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: length
-
-string = "Some longer sentence for this example."
-length = len(string)
-! length == 38
-
-string = "Whitespace                            "
-length = len(string)
-! length == 38
-```
+`res = [[stdlib_string_type(module):len(interface)]] (string)`
 
 #### Status
 
@@ -232,6 +265,24 @@ Elemental function.
 #### Result value
 
 The result is a default integer scalar value.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: length
+
+string = "Some longer sentence for this example."
+length = len(string)
+! length == 38
+
+string = "Whitespace                            "
+length = len(string)
+! length == 38
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -242,20 +293,9 @@ The result is a default integer scalar value.
 Returns the length of the character sequence without trailing spaces
 represented by the string.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: length
-
-string = "Some longer sentence for this example."
-length = len_trim(string)
-! length == 38
-
-string = "Whitespace                            "
-length = len_trim(string)
-! length == 10
-```
+`res = [[stdlib_string_type(module):len_trim(interface)]] (string)`
 
 #### Status
 
@@ -273,6 +313,24 @@ Elemental function.
 
 The result is a default integer scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: length
+
+string = "Some longer sentence for this example."
+length = len_trim(string)
+! length == 38
+
+string = "Whitespace                            "
+length = len_trim(string)
+! length == 10
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Trim function
@@ -281,16 +339,9 @@ The result is a default integer scalar value.
 
 Returns the character sequence hold by the string without trailing spaces.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-character(len=:), allocatable :: dlc
-
-string = "Whitespace                            "
-dlc = trim(string)
-! len(dlc) == 10
-```
+`res = [[stdlib_string_type(module):trim(interface)]] (string)`
 
 #### Status
 
@@ -309,6 +360,20 @@ Elemental function.
 The result is a scalar character value of the same or less length as the character
 sequence represented by the input `string_type` instance.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+character(len=:), allocatable :: dlc
+
+string = "Whitespace                            "
+dlc = trim(string)
+! len(dlc) == 10
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Adjustl function
@@ -318,15 +383,9 @@ sequence represented by the input `string_type` instance.
 Left-adjust the character sequence represented by the string.
 The length of the character sequence remains unchanged.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-
-string = "                            Whitespace"
-string = adjustl(string)
-! char(string) == "Whitespace                            "
-```
+`res = [[stdlib_string_type(module):adjustl(interface)]] (string)`
 
 #### Status
 
@@ -344,6 +403,19 @@ Elemental function.
 
 The result is a scalar character value of the same length as the character sequence
 represented by the input `string_type` instance.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+
+string = "                            Whitespace"
+string = adjustl(string)
+! char(string) == "Whitespace                            "
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -354,15 +426,9 @@ represented by the input `string_type` instance.
 Right-adjust the character sequence represented by the string.
 The length of the character sequence remains unchanged.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-
-string = "Whitespace                            "
-string = adjustr(string)
-! char(string) == "                            Whitespace"
-```
+`res = [[stdlib_string_type(module):adjustr(interface)]] (string)`
 
 #### Status
 
@@ -381,6 +447,19 @@ Elemental function.
 The result is a scalar character value of the same length as the character sequence
 represented by the input `string_type` instance.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+
+string = "Whitespace                            "
+string = adjustr(string)
+! char(string) == "                            Whitespace"
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Repeat function
@@ -390,16 +469,9 @@ represented by the input `string_type` instance.
 Repeats the character sequence hold by the string by the number of
 specified copies.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-character(len=:), allocatable :: dlc
-
-string = "What? "
-dlc = repeat(string, 3)
-! dlc == "What? What? What? "
-```
+`res = [[stdlib_string_type(module):repeat(interface)]] (string, ncopies)`
 
 #### Status
 
@@ -418,24 +490,31 @@ Elemental function.
 
 The result is a scalar character value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+character(len=:), allocatable :: dlc
+
+string = "What? "
+dlc = repeat(string, 3)
+! dlc == "What? What? What? "
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Char function
 
-Return the character sequence represented by the string.
-
 #### Description
 
-#### Synax
+Return the character sequence represented by the string.
 
-```fortran
-type(string_type) :: string
-character(len=:), allocatable :: dlc
+#### Syntax
 
-string = "Character sequence"
-dlc = char(string)
-! dlc == "Character sequence"
-```
+`res = [[stdlib_string_type(module):char(interface)]] (string)`
 
 #### Status
 
@@ -453,27 +532,31 @@ Elemental function.
 
 The result is a scalar character value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+character(len=:), allocatable :: dlc
+
+string = "Character sequence"
+dlc = char(string)
+! dlc == "Character sequence"
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Char function (position variant)
 
-Return the character sequence represented by the string.
-
 #### Description
 
-#### Synax
+Return the character sequence represented by the string.
 
-```fortran
-type(string_type) :: string
-character(len=:), allocatable :: dlc
-character(len=1), allocatable :: chars(:)
+#### Syntax
 
-string = "Character sequence"
-dlc = char(string, 3)
-! dlc == "a"
-chars = char(string, [3, 5, 8, 12, 14, 15, 18])
-! chars == ["a", "a", "e", "e", "u", "e", "e"]
-```
+`res = [[stdlib_string_type(module):char(interface)]] (string, pos)`
 
 #### Status
 
@@ -492,24 +575,34 @@ Elemental function.
 
 The result is a scalar character value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+character(len=:), allocatable :: dlc
+character(len=1), allocatable :: chars(:)
+
+string = "Character sequence"
+dlc = char(string, 3)
+! dlc == "a"
+chars = char(string, [3, 5, 8, 12, 14, 15, 18])
+! chars == ["a", "a", "e", "e", "u", "e", "e"]
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Char function (range variant)
 
-Return the character sequence represented by the string.
-
 #### Description
 
-#### Synax
+Return the character sequence represented by the string.
 
-```fortran
-type(string_type) :: string
-character(len=:), allocatable :: dlc
+#### Syntax
 
-string = "Fortran"
-dlc = char(string, 1, 4)
-! dlc == "Fort"
-```
+`res = [[stdlib_string_type(module):char(interface)]] (string, start, last)`
 
 #### Status
 
@@ -529,6 +622,20 @@ Elemental function.
 
 The result is a scalar character value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+character(len=:), allocatable :: dlc
+
+string = "Fortran"
+dlc = char(string, 1, 4)
+! dlc == "Fort"
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Ichar function
@@ -540,15 +647,9 @@ Character-to-integer conversion function.
 Returns the code for the character in the first character position of the
 character sequence in the system's native character set.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: code
-
-string = "Fortran"
-code = ichar(string)
-```
+`res = [[stdlib_string_type(module):ichar(interface)]] (string)`
 
 #### Status
 
@@ -565,6 +666,19 @@ Elemental function.
 #### Result value
 
 The result is a default integer scalar value.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: code
+
+string = "Fortran"
+code = ichar(string)
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -577,15 +691,9 @@ Code in ASCII collating sequence.
 Returns the code for the ASCII character in the first character position of
 the character sequences represent by the string.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: code
-
-string = "Fortran"
-code = iachar(string)
-```
+`res = [[stdlib_string_type(module):iachar(interface)]] (string)`
 
 #### Status
 
@@ -602,6 +710,19 @@ Elemental function.
 #### Result value
 
 The result is a default integer scalar value.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: code
+
+string = "Fortran"
+code = iachar(string)
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -615,9 +736,33 @@ Returns the position of the start of the leftmost or rightmost occurrence
 of string *substring* in *string*, counting from one. If *substring* is not
 present in *string*, zero is returned.
 
-#### Synax
+#### Syntax
+
+`res = [[stdlib_string_type(module):index(interface)]] (string, substring[, back])`
+
+#### Status
+
+Experimental
+
+#### Class
+
+Elemental function.
+
+#### Argument
+
+- `string`: Either scalar character value or string type. This argument is `intent(in)`.
+- `substring`: Either scalar character value or string type. This argument is `intent(in)`.
+- `back`: Either absent or a scalar logical value. This argument is `intent(in)`.
+
+#### Result value
+
+The result is a default integer scalar value.
+
+#### Example
 
 ```fortran
+use stdlib_string_type
+implicit none
 type(string_type) :: string
 integer :: pos
 
@@ -630,21 +775,8 @@ pos = index(string, "this", back=.true.)
 
 pos = index(string, "This")
 ! pos == 0
+end
 ```
-
-#### Status
-
-Experimental
-
-#### Class
-
-Elemental function.
-
-#### Argument
-
-#### Result value
-
-The result is a default integer scalar value.
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -660,9 +792,33 @@ of the leftmost character of *string* that is in *set*. If *back* is *true*,
 the rightmost position is returned. If no character of *set* is found in
 *string*, the result is zero.
 
-#### Synax
+#### Syntax
+
+`res = [[stdlib_string_type(module):scan(interface)]] (string, set[, back])`
+
+#### Status
+
+Experimental
+
+#### Class
+
+Elemental function.
+
+#### Argument
+
+- `string`: Either scalar character value or string type. This argument is `intent(in)`.
+- `set`: Either scalar character value or string type. This argument is `intent(in)`.
+- `back`: Either absent or a scalar logical value. This argument is `intent(in)`.
+
+#### Result value
+
+The result is a default integer scalar value.
+
+#### Example
 
 ```fortran
+use stdlib_string_type
+implicit none
 type(string_type) :: string
 integer :: pos
 
@@ -675,21 +831,8 @@ pos = scan(string, "ao", .true.)
 
 pos = scan(string, "c++")
 ! pos == 0
+end
 ```
-
-#### Status
-
-Experimental
-
-#### Class
-
-Elemental function.
-
-#### Argument
-
-#### Result value
-
-The result is a default integer scalar value.
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -705,9 +848,33 @@ of the leftmost character of *string* that is not in *set*. If *back* is *true*,
 the rightmost position is returned. If all characters of *string* are found
 in *set*, the result is zero.
 
-#### Synax
+#### Syntax
+
+`res = [[stdlib_string_type(module):verify(interface)]] (string, set[, back])`
+
+#### Status
+
+Experimental
+
+#### Class
+
+Elemental function.
+
+#### Argument
+
+- `string`: Either scalar character value or string type. This argument is `intent(in)`.
+- `set`: Either scalar character value or string type. This argument is `intent(in)`.
+- `back`: Either absent or a scalar logical value. This argument is `intent(in)`.
+
+#### Result value
+
+The result is a default integer scalar value.
+
+#### Example
 
 ```fortran
+use stdlib_string_type
+implicit none
 type(string_type) :: string
 integer :: pos
 
@@ -726,21 +893,8 @@ pos = verify(string, "c++", back=.true.)
 
 pos = verify(string, string)
 ! pos == 0
+end
 ```
-
-#### Status
-
-Experimental
-
-#### Class
-
-Elemental function.
-
-#### Argument
-
-#### Result value
-
-The result is a default integer scalar value.
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -754,22 +908,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `lgt` procedure.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = lgt(string, "abc")
-! res .eqv. .true.
-
-res = lgt(string, "bcd")
-! res .eqv. .false.
-
-res = lgt(string, "cde")
-! res .eqv. .false.
-```
+`res = [[stdlib_string_type(module):lgt(interface)]] (lhs, rhs)`
 
 #### Status
 
@@ -787,6 +928,26 @@ Elemental function.
 #### Result value
 
 The result is a default logical scalar value.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = lgt(string, "abc")
+! res .eqv. .true.
+
+res = lgt(string, "bcd")
+! res .eqv. .false.
+
+res = lgt(string, "cde")
+! res .eqv. .false.
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -800,9 +961,32 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `llt` procedure.
 
-#### Synax
+#### Syntax
+
+`res = [[stdlib_string_type(module):llt(interface)]] (lhs, rhs)`
+
+#### Status
+
+Experimental
+
+#### Class
+
+Elemental function.
+
+#### Argument
+
+- `lhs`: Either scalar character value or string type. This argument is `intent(in)`.
+- `rhs`: Either scalar character value or string type. This argument is `intent(in)`.
+
+#### Result value
+
+The result is a default logical scalar value.
+
+#### Example
 
 ```fortran
+use stdlib_string_type
+implicit none
 type(string_type) :: string
 logical :: res
 
@@ -815,24 +999,9 @@ res = llt(string, "bcd")
 
 res = llt(string, "cde")
 ! res .eqv. .true.
+end
 ```
 
-#### Status
-
-Experimental
-
-#### Class
-
-Elemental function.
-
-#### Argument
-
-- `lhs`: Either scalar character value or string type. This argument is `intent(in)`.
-- `rhs`: Either scalar character value or string type. This argument is `intent(in)`.
-
-#### Result value
-
-The result is a default logical scalar value.
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Lge function (lexical greater or equal)
@@ -845,22 +1014,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `lge` procedure.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = lge(string, "abc")
-! res .eqv. .true.
-
-res = lge(string, "bcd")
-! res .eqv. .true.
-
-res = lge(string, "cde")
-! res .eqv. .false.
-```
+`res = [[stdlib_string_type(module):lge(interface)]] (lhs, rhs)`
 
 #### Status
 
@@ -878,6 +1034,26 @@ Elemental function.
 #### Result value
 
 The result is a default logical scalar value.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = lge(string, "abc")
+! res .eqv. .true.
+
+res = lge(string, "bcd")
+! res .eqv. .true.
+
+res = lge(string, "cde")
+! res .eqv. .false.
+end
+```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -891,22 +1067,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `lle` procedure.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = lle(string, "abc")
-! res .eqv. .false.
-
-res = lle(string, "bcd")
-! res .eqv. .true.
-
-res = lle(string, "cde")
-! res .eqv. .true.
-```
+`res = [[stdlib_string_type(module):lle(interface)]] (lhs, rhs)`
 
 #### Status
 
@@ -925,6 +1088,26 @@ Elemental function.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = lle(string, "abc")
+! res .eqv. .false.
+
+res = lle(string, "bcd")
+! res .eqv. .true.
+
+res = lle(string, "cde")
+! res .eqv. .true.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator greater
@@ -937,22 +1120,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(.gt.)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = string > "abc"
-! res .eqv. .true.
-
-res = string > "bcd"
-! res .eqv. .false.
-
-res = string > "cde"
-! res .eqv. .false.
-```
+`res = lhs > rhs`
 
 #### Status
 
@@ -971,6 +1141,26 @@ Elemental function, `operator(.gt.)`.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = string > "abc"
+! res .eqv. .true.
+
+res = string > "bcd"
+! res .eqv. .false.
+
+res = string > "cde"
+! res .eqv. .false.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator less
@@ -983,22 +1173,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(.lt.)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = string < "abc"
-! res .eqv. .false.
-
-res = string < "bcd"
-! res .eqv. .false.
-
-res = string < "cde"
-! res .eqv. .true.
-```
+`res = lhs < rhs`
 
 #### Status
 
@@ -1017,6 +1194,26 @@ Elemental function, `operator(.lt.)`.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = string < "abc"
+! res .eqv. .false.
+
+res = string < "bcd"
+! res .eqv. .false.
+
+res = string < "cde"
+! res .eqv. .true.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator greater or equal
@@ -1029,22 +1226,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(.ge.)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = string >= "abc"
-! res .eqv. .true.
-
-res = string >= "bcd"
-! res .eqv. .true.
-
-res = string >= "cde"
-! res .eqv. .false.
-```
+`res = lhs >= rhs`
 
 #### Status
 
@@ -1063,6 +1247,26 @@ Elemental function, `operator(.ge.)`.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = string >= "abc"
+! res .eqv. .true.
+
+res = string >= "bcd"
+! res .eqv. .true.
+
+res = string >= "cde"
+! res .eqv. .false.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator less or equal
@@ -1075,22 +1279,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(.le.)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = string <= "abc"
-! res .eqv. .false.
-
-res = string <= "bcd"
-! res .eqv. .true.
-
-res = string <= "cde"
-! res .eqv. .true.
-```
+`res = lhs <= rhs`
 
 #### Status
 
@@ -1109,6 +1300,26 @@ Elemental function, `operator(.le.)`.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = string <= "abc"
+! res .eqv. .false.
+
+res = string <= "bcd"
+! res .eqv. .true.
+
+res = string <= "cde"
+! res .eqv. .true.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator equal
@@ -1121,22 +1332,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(.eq.)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = string == "abc"
-! res .eqv. .false.
-
-res = string == "bcd"
-! res .eqv. .true.
-
-res = string == "cde"
-! res .eqv. .false.
-```
+`res = lhs == rhs`
 
 #### Status
 
@@ -1155,6 +1353,26 @@ Elemental function, `operator(.eq.)`.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = string == "abc"
+! res .eqv. .false.
+
+res = string == "bcd"
+! res .eqv. .true.
+
+res = string == "cde"
+! res .eqv. .false.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator not equal
@@ -1167,22 +1385,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(.ne.)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-logical :: res
-
-string = "bcd"
-res = string /= "abc"
-! res .eqv. .true.
-
-res = string /= "bcd"
-! res .eqv. .false.
-
-res = string /= "cde"
-! res .eqv. .true.
-```
+`res = lhs /= rhs`
 
 #### Status
 
@@ -1201,6 +1406,26 @@ Elemental function, `operator(.ne.)`.
 
 The result is a default logical scalar value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+logical :: res
+
+string = "bcd"
+res = string /= "abc"
+! res .eqv. .true.
+
+res = string /= "bcd"
+! res .eqv. .false.
+
+res = string /= "cde"
+! res .eqv. .true.
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Concatenation operator
@@ -1213,15 +1438,9 @@ The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic `operator(//)`.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-
-string = "Hello, "
-string = string // "World!"
-! dlc(string) == 13
-```
+`res = lhs // rhs`
 
 #### Status
 
@@ -1240,6 +1459,19 @@ Elemental function, `operator(//)`.
 
 The result is a scalar character value.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+
+string = "Hello, "
+string = string // "World!"
+! dlc(string) == 13
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Unformatted write
@@ -1247,22 +1479,12 @@ The result is a scalar character value.
 #### Description
 
 Write the character sequence hold by the string to a connected unformatted unit.
+The character sequences is represented by an 64 bit signed integer record,
+holding the length of the following character record.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
-
-open(newunit=io, form="unformatted", status="scratch")
-write(io) string
-
-rewind(io)
-
-read(io) string
-close(io)
-```
+`write(unit, iostat=iostat, iomsg=iomsg) string`
 
 #### Status
 
@@ -1281,6 +1503,24 @@ Unformatted derived type IO.
 - `iomsg`: Buffer to return error message in case of failing output operation.
   This argument is `intent(inout)`.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: io
+string = "Important saved value"
+
+open(newunit=io, form="unformatted", status="scratch")
+write(io) string
+
+rewind(io)
+
+read(io) string
+close(io)
+end
+```
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Formatted write
@@ -1289,21 +1529,9 @@ Unformatted derived type IO.
 
 Write the character sequence hold by the string to a connected formatted unit.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
-
-open(newunit=io, form="formatted", status="scratch")
-write(io, *) string
-
-rewind(io)
-
-read(io, *) string
-close(io)
-```
+`write(unit, fmt, iostat=iostat, iomsg=iomsg) string`
 
 #### Status
 
@@ -1328,6 +1556,26 @@ Formatted derived type IO.
 - `iomsg`: Buffer to return error message in case of failing output operation.
   This argument is `intent(inout)`.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: io
+string = "Important saved value"
+
+open(newunit=io, form="formatted", status="scratch")
+write(io, *) string
+write(io, *)
+
+rewind(io)
+
+read(io, *) string
+close(io)
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Unformatted read
@@ -1335,22 +1583,12 @@ Formatted derived type IO.
 #### Description
 
 Read a character sequence from a connected unformatted unit into the string.
+The character sequences is represented by an 64 bit signed integer record,
+holding the length of the following character record.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
-
-open(newunit=io, form="unformatted", status="scratch")
-write(io) string
-
-rewind(io)
-
-read(io) string
-close(io)
-```
+`read(unit, iostat=iostat, iomsg=iomsg) string`
 
 #### Status
 
@@ -1369,6 +1607,25 @@ Unformatted derived type IO.
 - `iomsg`: Buffer to return error message in case of failing input operation.
   This argument is `intent(inout)`.
 
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: io
+string = "Important saved value"
+
+open(newunit=io, form="unformatted", status="scratch")
+write(io) string
+
+rewind(io)
+
+read(io) string
+close(io)
+end
+```
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Formatted read
@@ -1377,21 +1634,9 @@ Unformatted derived type IO.
 
 Read a character sequence from a connected formatted unit into the string.
 
-#### Synax
+#### Syntax
 
-```fortran
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
-
-open(newunit=io, form="formatted", status="scratch")
-write(io, *) string
-
-rewind(io)
-
-read(io, *) string
-close(io)
-```
+`read(unit, fmt, iostat=iostat, iomsg=iomsg) string`
 
 #### Status
 
@@ -1415,3 +1660,23 @@ Formatted derived type IO.
   This argument is `intent(out)`.
 - `iomsg`: Buffer to return error message in case of failing input operation.
   This argument is `intent(inout)`.
+
+#### Example
+
+```fortran
+use stdlib_string_type
+implicit none
+type(string_type) :: string
+integer :: io
+string = "Important saved value"
+
+open(newunit=io, form="formatted", status="scratch")
+write(io, *) string
+write(io, *)
+
+rewind(io)
+
+read(io, *) string
+close(io)
+end
+```
