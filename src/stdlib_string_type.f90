@@ -1029,6 +1029,18 @@ contains
         integer, intent(in) :: v_list(:)
         integer, intent(out) :: iostat
         character(len=*), intent(inout) :: iomsg
+
+        call read_formatted0(string%raw, unit, iotype, v_list, iostat, iomsg)
+
+    end subroutine read_formatted
+
+    subroutine read_formatted0(string, unit, iotype, v_list, iostat, iomsg)
+        character(len=:), allocatable, intent(inout) :: string
+        integer, intent(in) :: unit
+        character(len=*), intent(in) :: iotype
+        integer, intent(in) :: v_list(:)
+        integer, intent(out) :: iostat
+        character(len=*), intent(inout) :: iomsg
         integer, parameter :: buffer_size = 512
         character(len=buffer_size) :: buffer
         integer :: chunk
@@ -1036,12 +1048,12 @@ contains
         call unused_dummy_argument(iotype)
         call unused_dummy_argument(v_list)
 
-        string%raw = ''
+        string = ''
         do
             read(unit, '(a)', iostat=iostat, iomsg=iomsg, size=chunk, advance='no') &
                 buffer
             if (iostat > 0) exit
-            string%raw = string%raw // buffer(:chunk)
+            string = string // buffer(:chunk)
             if (iostat < 0) then
                 if (is_iostat_eor(iostat)) then
                     iostat = 0
@@ -1050,7 +1062,7 @@ contains
             end if
         end do
 
-    end subroutine read_formatted
+    end subroutine read_formatted0
 
 
     !> Do nothing but mark an unused dummy argument as such to acknowledge compile
