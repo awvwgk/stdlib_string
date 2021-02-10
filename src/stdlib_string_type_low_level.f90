@@ -56,13 +56,20 @@ contains
         end do
     end subroutine
 
+    pure integer function maybe0_len(string) result(n)
+       character(len=:), allocatable, intent(in) :: string
+       if (allocated(string)) then
+           n = len(string)
+       else
+           n = 0
+       end if
+    end function
+
     pure function maybe0(string) result(maybe_string)
        character(len=:), allocatable, intent(in) :: string
-       character(len=len(string)) :: maybe_string
+       character(len=maybe0_len(string)) :: maybe_string
        if (allocated(string)) then
            maybe_string = string
-       else
-           maybe_string = ''
        end if
     end function
 

@@ -13,7 +13,7 @@
 !> The specification of this module is available [here](../page/specs/stdlib_string_type.html).
 module stdlib_string_type
     use stdlib_string_type_low_level, only: maybe0, read_unformatted0, &
-        read_formatted0, new_string_from_chars0
+        read_formatted0, new_string_from_chars0, maybe0_len
     implicit none
     private
 
@@ -1044,7 +1044,7 @@ contains
     !> Safely return the character sequences represented by the string
     elemental function maybe(string) result(maybe_string)
        type(string_type), intent(in) :: string
-       character(len=len(string)) :: maybe_string
+       character(len=maybe0_len(string%raw)) :: maybe_string
        maybe_string = maybe0(string%raw)
     end function maybe
 
