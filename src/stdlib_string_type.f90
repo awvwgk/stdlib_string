@@ -12,6 +12,8 @@
 !>
 !> The specification of this module is available [here](../page/specs/stdlib_string_type.html).
 module stdlib_string_type
+    use stdlib_string_type_low_level, only: maybe0, read_unformatted0, &
+        read_formatted0, new_string_from_chars0, maybe0_len
     implicit none
     private
 
@@ -314,8 +316,7 @@ contains
     pure function new_string_from_chars(chars) result(new)
         character(len=*), intent(in) :: chars(:)
         type(string_type) :: new
-        allocate(character(len=len(chars)*size(chars)) :: new%raw)
-        new%raw = transfer(chars, new%raw)
+        new%raw = new_string_from_chars0(chars)
     end function new_string_from_chars
 
 
@@ -340,7 +341,7 @@ contains
         type(string_type), intent(in) :: string
         integer :: length
 
-        length = merge(len(string%raw), 0, allocated(string%raw))
+        length = len(maybe(string))
 
     end function len_string
 
@@ -351,7 +352,7 @@ contains
         type(string_type), intent(in) :: string
         integer :: length
 
-        length = merge(len_trim(string%raw), 0, allocated(string%raw))
+        length = len_trim(maybe(string))
 
     end function len_trim_string
 
@@ -1010,14 +1011,8 @@ contains
         integer, intent(in)    :: unit
         integer, intent(out)   :: iostat
         character(len=*), intent(inout) :: iomsg
-        integer, parameter :: long = selected_int_kind(18)
-        integer(long) :: chunk
 
-        read(unit, iostat=iostat, iomsg=iomsg) chunk
-        if (iostat == 0) then
-            string%raw = repeat(' ', chunk)
-            read(unit, iostat=iostat, iomsg=iomsg) string%raw
-        end if
+        call read_unformatted0(string%raw, unit, iostat, iomsg)
 
     end subroutine read_unformatted
 
@@ -1029,29 +1024,10 @@ contains
         integer, intent(in) :: v_list(:)
         integer, intent(out) :: iostat
         character(len=*), intent(inout) :: iomsg
-        integer, parameter :: buffer_size = 512
-        character(len=buffer_size) :: buffer
-        integer :: chunk
 
-        call unused_dummy_argument(iotype)
-        call unused_dummy_argument(v_list)
-
-        string%raw = ''
-        do
-            read(unit, '(a)', iostat=iostat, iomsg=iomsg, size=chunk, advance='no') &
-                buffer
-            if (iostat > 0) exit
-            string%raw = string%raw // buffer(:chunk)
-            if (iostat < 0) then
-                if (is_iostat_eor(iostat)) then
-                    iostat = 0
-                end if
-                exit
-            end if
-        end do
+        call read_formatted0(string%raw, unit, iotype, v_list, iostat, iomsg)
 
     end subroutine read_formatted
-
 
     !> Do nothing but mark an unused dummy argument as such to acknowledge compile
     !> time warning like:
@@ -1068,12 +1044,8 @@ contains
     !> Safely return the character sequences represented by the string
     elemental function maybe(string) result(maybe_string)
        type(string_type), intent(in) :: string
-       character(len=len(string)) :: maybe_string
-       if (allocated(string%raw)) then
-           maybe_string = string%raw
-       else
-           maybe_string = ''
-       end if
+       character(len=maybe0_len(string%raw)) :: maybe_string
+       maybe_string = maybe0(string%raw)
     end function maybe
 
 
