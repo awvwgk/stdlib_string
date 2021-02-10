@@ -10,9 +10,6 @@ contains
         character(len=:), allocatable :: new
         allocate(character(len=len(chars)*size(chars)) :: new)
         new = transfer(chars, new)
-        ! Cannot you just do:
-        ! new = chars
-        ! ?
     end function
 
     subroutine read_unformatted0(string, unit, iostat, iomsg)
