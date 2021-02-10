@@ -341,7 +341,7 @@ contains
         type(string_type), intent(in) :: string
         integer :: length
 
-        length = merge(len(string%raw), 0, allocated(string%raw))
+        length = len(maybe(string))
 
     end function len_string
 
@@ -352,7 +352,7 @@ contains
         type(string_type), intent(in) :: string
         integer :: length
 
-        length = merge(len_trim(string%raw), 0, allocated(string%raw))
+        length = len_trim(maybe(string))
 
     end function len_trim_string
 
