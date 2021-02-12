@@ -35,7 +35,6 @@ module stdlib_string_type
     !> Constructor for new string instances
     interface string_type
         module procedure :: new_string
-        module procedure :: new_string_from_chars
     end interface string_type
 
 
@@ -198,7 +197,6 @@ module stdlib_string_type
     !> Assign a character sequence to a string.
     interface assignment(=)
         module procedure :: assign_string_char
-        module procedure :: assign_string_chars
     end interface assignment(=)
 
     !> Compare two character sequences for being greater, the left-hand side,
@@ -310,14 +308,6 @@ contains
         if (present(string)) new%raw = string
     end function new_string
 
-    !> Constructor for new string instances from an array of characters.
-    pure function new_string_from_chars(chars) result(new)
-        character(len=*), intent(in) :: chars(:)
-        type(string_type) :: new
-        allocate(character(len=len(chars)*size(chars)) :: new%raw)
-        new%raw = transfer(chars, new%raw)
-    end function new_string_from_chars
-
 
     !> Assign a character sequence to a string.
     elemental subroutine assign_string_char(lhs, rhs)
@@ -325,14 +315,6 @@ contains
         character(len=*), intent(in) :: rhs
         lhs%raw = rhs
     end subroutine assign_string_char
-
-    !> Assign a character sequence to a string.
-    pure subroutine assign_string_chars(lhs, rhs)
-        type(string_type), intent(inout) :: lhs
-        character(len=*), intent(in) :: rhs(:)
-        allocate(character(len=len(rhs)*size(rhs)) :: lhs%raw)
-        lhs%raw = transfer(rhs, lhs%raw)
-    end subroutine assign_string_chars
 
 
     !> Returns the length of the character sequence represented by the string.

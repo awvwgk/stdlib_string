@@ -119,57 +119,6 @@ end
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-### Constructor from character array
-
-The module defines a default constructor to create a string type
-from an array of characters. The character array is flattend.
-
-#### Description
-
-Creates a string instance representing the flattend input array of characters.
-
-#### Syntax
-
-`res = [[stdlib_string_type(module):string_type(interface)]] (chars)`
-
-#### Status
-
-Experimental
-
-#### Class
-
-Pure function.
-
-#### Argument
-
-`chars`: shall be an array of characters. It is an `intent(in)` argument.
-
-#### Result value
-
-The result is an instance of `string_type`.
-
-#### Example
-
-```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-string = string_type(["S", "e", "q", "u", "e", "n", "c", "e"])
-! len(string) == 8
-end
-```
-
-```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-string = string_type(["S", "e", "q", "u", "e", "n", "c", "e"])
-! len(string) == 8
-end
-```
-
-
-<!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Assignment of character scalar
 
 The module defines an assignment operations, `=`, to create a string type
@@ -199,41 +148,6 @@ implicit none
 type(string_type) :: string
 ! len(string) == 0
 string = "Sequence"
-! len(string) == 8
-end
-```
-
-
-<!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-### Assignment of character array
-
-The module defines an assignment operations, `=`, to create a string type
-from an array of characters
-
-#### Description
-
-Creates a string instance representing the flattend right-hand-side array of characters.
-
-#### Syntax
-
-`lhs = rhs`
-
-#### Status
-
-Experimental
-
-#### Class
-
-Pure subroutine, `assignment(=)`.
-
-#### Example
-
-```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-! len(string) == 0
-string = ["S", "e", "q", "u", "e", "n", "c", "e"]
 ! len(string) == 8
 end
 ```
@@ -1492,7 +1406,7 @@ Experimental
 
 #### Class
 
-Unformatted derived type IO.
+Unformatted derived type output.
 
 #### Argument
 
@@ -1539,7 +1453,7 @@ Experimental
 
 #### Class
 
-Formatted derived type IO.
+Formatted derived type output.
 
 #### Argument
 
@@ -1596,7 +1510,7 @@ Experimental
 
 #### Class
 
-Unformatted derived type IO.
+Unformatted derived type input.
 
 #### Argument
 
@@ -1644,7 +1558,7 @@ Experimental
 
 #### Class
 
-Formatted derived type IO.
+Formatted derived type input.
 
 #### Argument
 
