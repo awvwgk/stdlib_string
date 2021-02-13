@@ -481,6 +481,9 @@ is implementation dependent and not visible for the user of the module.</p>
 <h4 id="status">Status</h4>
 <p>Experimental</p>
 <h2 id="procedures-and-methods-provided">Procedures and methods provided</h2>
+<p>Procedures returning <code>string_type</code> instances can usually used in elemental
+context, while procedures returning scalar character values can only be
+used in a pure way.</p>
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="constructor-for-empty-string">Constructor for empty string</h3>
 <p>The module defines a default constructor to create an empty string type.</p>
@@ -620,7 +623,8 @@ represented by the string.</p>
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="trim-function">Trim function</h3>
 <h4 id="description_5">Description</h4>
-<p>Returns the character sequence hold by the string without trailing spaces.</p>
+<p>Returns the character sequence hold by the string without trailing spaces
+represented by a <code>string_type</code>.</p>
 <h4 id="syntax_5">Syntax</h4>
 <p><code>res = <a href="../../module/stdlib_string_type.html#interface-trim">trim</a> (string)</code></p>
 <h4 id="status_6">Status</h4>
@@ -632,17 +636,15 @@ represented by the string.</p>
 <li><code>string</code>: Instance of a <code>string_type</code>. This argument is <code>intent(in)</code>.</li>
 </ul>
 <h4 id="result-value_4">Result value</h4>
-<p>The result is a scalar character value of the same or less length as the character
-sequence represented by the input <code>string_type</code> instance.</p>
+<p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_5">Example</h4>
 <div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
 <span class="k">implicit none</span>
 <span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
 
 <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
-<span class="n">dlc</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! len(dlc) == 10</span>
+<span class="n">string</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="c">! len(string) == 10</span>
 <span class="k">end</span>
 </code></pre></div>
 
@@ -662,8 +664,7 @@ The length of the character sequence remains unchanged.</p>
 <li><code>string</code>: Instance of a <code>string_type</code>. This argument is <code>intent(in)</code>.</li>
 </ul>
 <h4 id="result-value_5">Result value</h4>
-<p>The result is a scalar character value of the same length as the character sequence
-represented by the input <code>string_type</code> instance.</p>
+<p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_6">Example</h4>
 <div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
 <span class="k">implicit none</span>
@@ -691,8 +692,7 @@ The length of the character sequence remains unchanged.</p>
 <li><code>string</code>: Instance of a <code>string_type</code>. This argument is <code>intent(in)</code>.</li>
 </ul>
 <h4 id="result-value_6">Result value</h4>
-<p>The result is a scalar character value of the same length as the character sequence
-represented by the input <code>string_type</code> instance.</p>
+<p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_7">Example</h4>
 <div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
 <span class="k">implicit none</span>
@@ -721,16 +721,15 @@ specified copies.</p>
 <li><code>ncopies</code>: Integer of default type. This argument is <code>intent(in)</code>.</li>
 </ul>
 <h4 id="result-value_7">Result value</h4>
-<p>The result is a scalar character value.</p>
+<p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_8">Example</h4>
 <div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
 <span class="k">implicit none</span>
 <span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
 
 <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;What? &quot;</span>
-<span class="n">dlc</span> <span class="o">=</span> <span class="nb">repeat</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="c">! dlc == &quot;What? What? What? &quot;</span>
+<span class="n">string</span> <span class="o">=</span> <span class="nb">repeat</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="c">! string == &quot;What? What? What? &quot;</span>
 <span class="k">end</span>
 </code></pre></div>
 
@@ -743,7 +742,7 @@ specified copies.</p>
 <h4 id="status_10">Status</h4>
 <p>Experimental</p>
 <h4 id="class_9">Class</h4>
-<p>Elemental function.</p>
+<p>Pure function.</p>
 <h4 id="argument_8">Argument</h4>
 <ul>
 <li><code>string</code>: Instance of a <code>string_type</code>. This argument is <code>intent(in)</code>.</li>
@@ -803,7 +802,7 @@ specified copies.</p>
 <h4 id="status_12">Status</h4>
 <p>Experimental</p>
 <h4 id="class_11">Class</h4>
-<p>Elemental function.</p>
+<p>Pure function.</p>
 <h4 id="argument_10">Argument</h4>
 <ul>
 <li><code>string</code>: Instance of a <code>string_type</code>. This argument is <code>intent(in)</code>.</li>
@@ -1408,7 +1407,7 @@ This defines three procedures overloading the intrinsic <code>operator(//)</code
 <li><code>rhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
 </ul>
 <h4 id="result-value_26">Result value</h4>
-<p>The result is a scalar character value.</p>
+<p>The result is an instance of <code>string_type</code>.</p>
 <h4 id="example_27">Example</h4>
 <div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
 <span class="k">implicit none</span>
@@ -1416,7 +1415,7 @@ This defines three procedures overloading the intrinsic <code>operator(//)</code
 
 <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Hello, &quot;</span>
 <span class="n">string</span> <span class="o">=</span> <span class="n">string</span> <span class="o">//</span> <span class="s2">&quot;World!&quot;</span>
-<span class="c">! dlc(string) == 13</span>
+<span class="c">! len(string) == 13</span>
 <span class="k">end</span>
 </code></pre></div>
 
@@ -1431,7 +1430,7 @@ holding the length of the following character record.</p>
 <h4 id="status_29">Status</h4>
 <p>Experimental</p>
 <h4 id="class_28">Class</h4>
-<p>Unformatted derived type output.</p>
+<p>Unformatted user defined derived type output.</p>
 <h4 id="argument_27">Argument</h4>
 <ul>
 <li><code>string</code>: Instance of the string type to read. This argument is <code>intent(inout)</code>.</li>
@@ -1462,12 +1461,14 @@ holding the length of the following character record.</p>
 <h3 id="formatted-write">Formatted write</h3>
 <h4 id="description_29">Description</h4>
 <p>Write the character sequence hold by the string to a connected formatted unit.</p>
+<p>The current implementation is limited to list directed output and <code>dt</code> formatted
+output. Requesting namelist output will raise an error.</p>
 <h4 id="syntax_29">Syntax</h4>
 <p><code>write(unit, fmt, iostat=iostat, iomsg=iomsg) string</code></p>
 <h4 id="status_30">Status</h4>
 <p>Experimental</p>
 <h4 id="class_29">Class</h4>
-<p>Formatted derived type output.</p>
+<p>Formatted user defined derived type output.</p>
 <h4 id="argument_28">Argument</h4>
 <ul>
 <li><code>string</code>: Instance of the string type to read. This argument is <code>intent(inout)</code>.</li>
@@ -1507,6 +1508,7 @@ holding the length of the following character record.</p>
 <p>Read a character sequence from a connected unformatted unit into the string.
 The character sequences is represented by an 64 bit signed integer record,
 holding the length of the following character record.</p>
+<p>On failure the state the read variable is undefined and implementation dependent.</p>
 <h4 id="syntax_30">Syntax</h4>
 <p><code>read(unit, iostat=iostat, iomsg=iomsg) string</code></p>
 <h4 id="status_31">Status</h4>
@@ -1542,7 +1544,11 @@ holding the length of the following character record.</p>
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="formatted-read">Formatted read</h3>
 <h4 id="description_31">Description</h4>
-<p>Read a character sequence from a connected formatted unit into the string.</p>
+<p>Read a character sequence from a connected formatted unit into the string.
+List-directed input will retrieve the complete record into the string.</p>
+<p>On failure the state the read variable is undefined and implementation dependent.</p>
+<p>The current implementation is limited to list directed input.
+Requesting <code>dt</code> formatted input or namelist output will raise an error.</p>
 <h4 id="syntax_31">Syntax</h4>
 <p><code>read(unit, fmt, iostat=iostat, iomsg=iomsg) string</code></p>
 <h4 id="status_32">Status</h4>
@@ -1623,7 +1629,7 @@ holding the length of the following character record.</p>
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-02-12 08:02  
+             on 2021-02-13 14:48  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> stdlib_string was developed by fortran-lang/stdlib contributors</p></div>

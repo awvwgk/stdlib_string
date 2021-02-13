@@ -25,6 +25,9 @@ module stdlib_string_type
     public :: read(formatted), read(unformatted)
 
 
+    integer, parameter :: long = selected_int_kind(18)
+
+
     !> String type holding an arbitrary sequence of characters.
     type :: string_type
         sequence
@@ -305,7 +308,9 @@ contains
     elemental function new_string(string) result(new)
         character(len=*), intent(in), optional :: string
         type(string_type) :: new
-        if (present(string)) new%raw = string
+        if (present(string)) then
+            new%raw = string
+        end if
     end function new_string
 
 
@@ -322,7 +327,11 @@ contains
         type(string_type), intent(in) :: string
         integer :: length
 
-        length = merge(len(string%raw), 0, allocated(string%raw))
+        if (allocated(string%raw)) then
+            length = len(string%raw)
+        else
+            length = 0
+        end if
 
     end function len_string
 
@@ -359,9 +368,11 @@ contains
 
 
     !> Return the character sequence represented by the string.
-    elemental function char_string(string) result(character_string)
+    pure function char_string(string) result(character_string)
         type(string_type), intent(in) :: string
-        character(len=len(string)) :: character_string
+        ! GCC 8 and older cannot evaluate pure derived type procedures here
+        !character(len=len(string)) :: character_string
+        character(len=:), allocatable :: character_string
 
         character_string = maybe(string)
 
@@ -378,12 +389,11 @@ contains
     end function char_string_pos
 
     !> Return the character sequence represented by the string.
-    elemental function char_string_range(string, start, last) result(character_string)
+    pure function char_string_range(string, start, last) result(character_string)
         type(string_type), intent(in) :: string
         integer, intent(in) :: start
         integer, intent(in) :: last
-        character(len=max(last-start+1, 0)) :: character_string
-        integer, parameter :: long = selected_int_kind(18)
+        character(len=last-start+1) :: character_string
 
         character_string = merge(string%raw(int(start, long):int(last, long)), &
             repeat(' ', int(len(character_string), long)), allocated(string%raw))
@@ -394,7 +404,7 @@ contains
     !> Returns the character sequence hold by the string without trailing spaces.
     elemental function trim_string(string) result(trimmed_string)
         type(string_type), intent(in) :: string
-        character(len=len_trim(string)) :: trimmed_string
+        type(string_type) :: trimmed_string
 
         trimmed_string = trim(maybe(string))
 
@@ -405,7 +415,7 @@ contains
     !> The length of the character sequence remains unchanged.
     elemental function adjustl_string(string) result(adjusted_string)
         type(string_type), intent(in) :: string
-        character(len=len(string)) :: adjusted_string
+        type(string_type) :: adjusted_string
 
         adjusted_string = adjustl(maybe(string))
 
@@ -416,7 +426,7 @@ contains
     !> The length of the character sequence remains unchanged.
     elemental function adjustr_string(string) result(adjusted_string)
         type(string_type), intent(in) :: string
-        character(len=len(string)) :: adjusted_string
+        type(string_type) :: adjusted_string
 
         adjusted_string = adjustr(maybe(string))
 
@@ -428,7 +438,7 @@ contains
     elemental function repeat_string(string, ncopies) result(repeated_string)
         type(string_type), intent(in) :: string
         integer, intent(in) :: ncopies
-        character(len=len(string)*ncopies) :: repeated_string
+        type(string_type) :: repeated_string
 
         repeated_string = repeat(maybe(string), ncopies)
 
@@ -923,9 +933,9 @@ contains
     elemental function concat_string_string(lhs, rhs) result(string)
         type(string_type), intent(in) :: lhs
         type(string_type), intent(in) :: rhs
-        character(len=len(lhs)+len(rhs)) :: string
+        type(string_type) :: string
 
-        string = maybe(rhs) // maybe(lhs)
+        string%raw = maybe(rhs) // maybe(lhs)
 
     end function concat_string_string
 
@@ -934,9 +944,9 @@ contains
     elemental function concat_string_char(lhs, rhs) result(string)
         type(string_type), intent(in) :: lhs
         character(len=*), intent(in) :: rhs
-        character(len=len(lhs)+len(rhs)) :: string
+        type(string_type) :: string
 
-        string = maybe(lhs) // rhs
+        string%raw = maybe(lhs) // rhs
 
     end function concat_string_char
 
@@ -945,9 +955,9 @@ contains
     elemental function concat_char_string(lhs, rhs) result(string)
         character(len=*), intent(in) :: lhs
         type(string_type), intent(in) :: rhs
-        character(len=len(lhs)+len(rhs)) :: string
+        type(string_type) :: string
 
-        string = lhs // maybe(rhs)
+        string%raw = lhs // maybe(rhs)
 
     end function concat_char_string
 
@@ -959,7 +969,6 @@ contains
         integer, intent(in) :: unit
         integer, intent(out) :: iostat
         character(len=*), intent(inout) :: iomsg
-        integer, parameter :: long = selected_int_kind(18)
 
         write(unit, iostat=iostat, iomsg=iomsg) int(len(string), long)
         if (iostat == 0) then
@@ -971,17 +980,26 @@ contains
     !> Write the character sequence hold by the string to a connected formatted
     !> unit.
     subroutine write_formatted(string, unit, iotype, v_list, iostat, iomsg)
-        type(string_type), intent(in)    :: string
-        integer, intent(in)    :: unit
-        character(len=*), intent(in)    :: iotype
-        integer, intent(in)    :: v_list(:)
-        integer, intent(out)   :: iostat
+        type(string_type), intent(in) :: string
+        integer, intent(in) :: unit
+        character(len=*), intent(in) :: iotype
+        integer, intent(in) :: v_list(:)
+        integer, intent(out) :: iostat
         character(len=*), intent(inout) :: iomsg
 
-        call unused_dummy_argument(iotype)
-        call unused_dummy_argument(v_list)
-
-        write(unit, '(a)', iostat=iostat, iomsg=iomsg) maybe(string)
+        select case(iotype)
+        case("LISTDIRECTED")
+            write(unit, '(a)', iostat=iostat, iomsg=iomsg) maybe(string)
+        case("NAMELIST")
+            error stop "[Fatal] This implementation does not support namelist output"
+        case default ! DT*
+            select case(size(v_list))
+            case(0) ! DT
+                write(unit, '(a)', iostat=iostat, iomsg=iomsg) maybe(string)
+            case default
+                error stop "[Fatal] This implementation does not support v_list formatters"
+            end select
+        end select
 
     end subroutine write_formatted
 
@@ -992,13 +1010,14 @@ contains
         integer, intent(in)    :: unit
         integer, intent(out)   :: iostat
         character(len=*), intent(inout) :: iomsg
-        integer, parameter :: long = selected_int_kind(18)
+        character(len=:), allocatable :: buffer
         integer(long) :: chunk
 
         read(unit, iostat=iostat, iomsg=iomsg) chunk
         if (iostat == 0) then
-            string%raw = repeat(' ', chunk)
-            read(unit, iostat=iostat, iomsg=iomsg) string%raw
+            allocate(character(len=chunk) :: buffer)
+            read(unit, iostat=iostat, iomsg=iomsg) buffer
+            string%raw = buffer
         end if
 
     end subroutine read_unformatted
@@ -1011,26 +1030,45 @@ contains
         integer, intent(in) :: v_list(:)
         integer, intent(out) :: iostat
         character(len=*), intent(inout) :: iomsg
-        integer, parameter :: buffer_size = 512
-        character(len=buffer_size) :: buffer
-        integer :: chunk
+        character(len=:), allocatable :: line
 
-        call unused_dummy_argument(iotype)
         call unused_dummy_argument(v_list)
 
-        string%raw = ''
-        do
-            read(unit, '(a)', iostat=iostat, iomsg=iomsg, size=chunk, advance='no') &
-                buffer
-            if (iostat > 0) exit
-            string%raw = string%raw // buffer(:chunk)
-            if (iostat < 0) then
-                if (is_iostat_eor(iostat)) then
-                    iostat = 0
-                end if
-                exit
+        select case(iotype)
+        case("LISTDIRECTED")
+            call read_line(unit, line, iostat, iomsg)
+        case("NAMELIST")
+            error stop "[Fatal] This implementation does not support namelist input"
+        case default ! DT*
+            error stop "[Fatal] This implementation does not support dt formatters"
+        end select
+
+        string%raw = line
+
+    contains
+
+        !> Internal routine to read a whole record from a formatted unit
+        subroutine read_line(unit, line, iostat, iomsg)
+            integer, intent(in) :: unit
+            character(len=:), allocatable, intent(out) :: line
+            integer, intent(out) :: iostat
+            character(len=*), intent(inout) :: iomsg
+            integer, parameter :: buffer_size = 512
+            character(len=buffer_size) :: buffer
+            integer :: chunk
+            line = ''
+            do
+                read(unit, '(a)', iostat=iostat, iomsg=iomsg, size=chunk, advance='no') &
+                    buffer
+                if (iostat > 0) exit
+                line = line // buffer(:chunk)
+                if (iostat < 0) exit
+            end do
+
+            if (is_iostat_eor(iostat)) then
+                iostat = 0
             end if
-        end do
+        end subroutine read_line
 
     end subroutine read_formatted
 
@@ -1048,14 +1086,16 @@ contains
 
 
     !> Safely return the character sequences represented by the string
-    elemental function maybe(string) result(maybe_string)
-       type(string_type), intent(in) :: string
-       character(len=len(string)) :: maybe_string
-       if (allocated(string%raw)) then
-           maybe_string = string%raw
-       else
-           maybe_string = ''
-       end if
+    pure function maybe(string) result(maybe_string)
+        type(string_type), intent(in) :: string
+        ! GCC 8 and older cannot evaluate pure derived type procedures here
+        !character(len=len(string)) :: maybe_string
+        character(len=:), allocatable :: maybe_string
+        if (allocated(string%raw)) then
+            maybe_string = string%raw
+        else
+            maybe_string = ''
+        end if
     end function maybe
 
 
