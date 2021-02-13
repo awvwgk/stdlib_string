@@ -30,6 +30,10 @@ Experimental
 
 ## Procedures and methods provided
 
+Procedures returning `string_type` instances can usually used in elemental
+context, while procedures returning scalar character values can only be
+used in a pure way.
+
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Constructor for empty string
@@ -251,7 +255,8 @@ end
 
 #### Description
 
-Returns the character sequence hold by the string without trailing spaces.
+Returns the character sequence hold by the string without trailing spaces
+represented by a `string_type`.
 
 #### Syntax
 
@@ -271,8 +276,7 @@ Elemental function.
 
 #### Result value
 
-The result is a scalar character value of the same or less length as the character
-sequence represented by the input `string_type` instance.
+The result is a scalar `string_type` value.
 
 #### Example
 
@@ -280,11 +284,10 @@ sequence represented by the input `string_type` instance.
 use stdlib_string_type
 implicit none
 type(string_type) :: string
-character(len=:), allocatable :: dlc
 
 string = "Whitespace                            "
-dlc = trim(string)
-! len(dlc) == 10
+string = trim(string)
+! len(string) == 10
 end
 ```
 
@@ -315,8 +318,7 @@ Elemental function.
 
 #### Result value
 
-The result is a scalar character value of the same length as the character sequence
-represented by the input `string_type` instance.
+The result is a scalar `string_type` value.
 
 #### Example
 
@@ -358,8 +360,7 @@ Elemental function.
 
 #### Result value
 
-The result is a scalar character value of the same length as the character sequence
-represented by the input `string_type` instance.
+The result is a scalar `string_type` value.
 
 #### Example
 
@@ -402,7 +403,7 @@ Elemental function.
 
 #### Result value
 
-The result is a scalar character value.
+The result is a scalar `string_type` value.
 
 #### Example
 
@@ -410,11 +411,10 @@ The result is a scalar character value.
 use stdlib_string_type
 implicit none
 type(string_type) :: string
-character(len=:), allocatable :: dlc
 
 string = "What? "
-dlc = repeat(string, 3)
-! dlc == "What? What? What? "
+string = repeat(string, 3)
+! string == "What? What? What? "
 end
 ```
 
@@ -436,7 +436,7 @@ Experimental
 
 #### Class
 
-Elemental function.
+Pure function.
 
 #### Argument
 
@@ -524,7 +524,7 @@ Experimental
 
 #### Class
 
-Elemental function.
+Pure function.
 
 #### Argument
 
@@ -1371,7 +1371,7 @@ Elemental function, `operator(//)`.
 
 #### Result value
 
-The result is a scalar character value.
+The result is an instance of `string_type`.
 
 #### Example
 
@@ -1382,7 +1382,7 @@ type(string_type) :: string
 
 string = "Hello, "
 string = string // "World!"
-! dlc(string) == 13
+! len(string) == 13
 end
 ```
 
@@ -1406,7 +1406,7 @@ Experimental
 
 #### Class
 
-Unformatted derived type output.
+Unformatted user defined derived type output.
 
 #### Argument
 
@@ -1443,6 +1443,9 @@ end
 
 Write the character sequence hold by the string to a connected formatted unit.
 
+The current implementation is limited to list directed output and `dt` formatted
+output. Requesting namelist output will raise an error.
+
 #### Syntax
 
 `write(unit, fmt, iostat=iostat, iomsg=iomsg) string`
@@ -1453,7 +1456,7 @@ Experimental
 
 #### Class
 
-Formatted derived type output.
+Formatted user defined derived type output.
 
 #### Argument
 
@@ -1499,6 +1502,8 @@ end
 Read a character sequence from a connected unformatted unit into the string.
 The character sequences is represented by an 64 bit signed integer record,
 holding the length of the following character record.
+
+On failure the state the read variable is undefined and implementation dependent.
 
 #### Syntax
 
@@ -1547,6 +1552,12 @@ end
 #### Description
 
 Read a character sequence from a connected formatted unit into the string.
+List-directed input will retrieve the complete record into the string.
+
+On failure the state the read variable is undefined and implementation dependent.
+
+The current implementation is limited to list directed input.
+Requesting `dt` formatted input or namelist output will raise an error.
 
 #### Syntax
 

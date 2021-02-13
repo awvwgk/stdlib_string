@@ -8,9 +8,9 @@ module test_string_derivedtype_io
 
 contains
 
-    subroutine test_formatted_io
+    subroutine test_listdirected_io
         type(string_type) :: string
-        integer :: io
+        integer :: io, stat
         string = "Important saved value"
 
         open(newunit=io, form="formatted", status="scratch")
@@ -20,9 +20,31 @@ contains
         string = ""
         rewind(io)
 
-        read(io, *) string
+        read(io, *, iostat=stat) string
         close(io)
 
+        call check(stat == 0)
+        call check(len(string) == 21)
+        call check(string == "Important saved value")
+    end subroutine test_listdirected_io
+
+    subroutine test_formatted_io
+        type(string_type) :: string
+        integer :: io, stat
+        string = "Important saved value"
+
+        !open(newunit=io, form="formatted", status="scratch")
+        open(newunit=io, form="formatted", file="scratch.txt")
+        write(io, '(dt)') string
+        write(io, '(a)') ! Pad with a newline or we might run into EOF while reading
+
+        string = ""
+        rewind(io)
+
+        read(io, *, iostat=stat) string
+        close(io)
+
+        call check(stat == 0)
         call check(len(string) == 21)
         call check(string == "Important saved value")
     end subroutine test_formatted_io
@@ -51,6 +73,7 @@ program tester
     use test_string_derivedtype_io
     implicit none
 
+    call test_listdirected_io
     call test_formatted_io
     call test_unformatted_io
 

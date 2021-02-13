@@ -67,16 +67,11 @@ contains
     end subroutine test_lle
 
     subroutine test_trim
-        type(string_type) :: string
-        integer :: length
+       type(string_type) :: string, trimmed_str
 
-        string = "Some longer sentence for this example."
-        length = len_trim(string)
-        call check(length == 38)
-
-        string = "Whitespace                            "
-        length = len_trim(string)
-        call check(length == 10)
+       string = "Whitespace                            "
+       trimmed_str = trim(string)
+       call check(len(trimmed_str) == 10)
     end subroutine test_trim
 
     subroutine test_len
@@ -159,11 +154,10 @@ contains
 
     subroutine test_repeat
         type(string_type) :: string
-        character(len=:), allocatable :: dlc
 
         string = "What? "
-        dlc = repeat(string, 3)
-        call check(dlc == "What? What? What? ")
+        string = repeat(string, 3)
+        call check(string == "What? What? What? ")
     end subroutine test_repeat
 
     subroutine test_index
