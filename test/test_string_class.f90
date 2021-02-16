@@ -1,23 +1,132 @@
+!> Minimal implementation of a string based on the stdlib string abstract base class
+module string_implementation
+    use stdlib_string_class, only : string_class, &
+        len, len_trim, trim, index, scan, verify, repeat, adjustr, adjustl, &
+        lgt, lge, llt, lle, char, ichar, iachar
+    implicit none
+    private
+
+    public :: my_string_type
+    public :: len, len_trim, trim, index, scan, verify, repeat, adjustr, adjustl
+    public :: lgt, lge, llt, lle, char, ichar, iachar
+
+    !> Definition of a string class implementation
+    type, extends(string_class) :: my_string_type
+        private
+        character(len=:), allocatable :: raw
+    contains
+        !> Assign a character sequence to a string object.
+        procedure :: assign_object_char
+        !> Returns the length of the character sequence represented by the string.
+        procedure :: get_len
+        !> Returns the length of the character sequence without trailing spaces
+        !> represented by the string.
+        procedure :: get_len_trim
+        !> Return the character sequence represented by the string.
+        procedure :: get_char
+        !> Return the character sequence represented by the string.
+        procedure :: get_char_pos
+        !> Return the character sequence represented by the string.
+        procedure :: get_char_range
+    end type my_string_type
+
+    !> Constructor for string class implementation
+    interface my_string_type
+        module procedure :: new_string
+    end interface my_string_type
+
+contains
+
+    !> Constructor for new string instances from a scalar character value.
+    elemental function new_string(string) result(new)
+        character(len=*), intent(in), optional :: string
+        type(my_string_type) :: new
+        if (present(string)) then
+            new%raw = string
+        end if
+    end function new_string
+
+    !> Assign a character sequence to a string object.
+    elemental subroutine assign_object_char(lhs, rhs)
+        class(my_string_type), intent(inout) :: lhs
+        character(len=*), intent(in) :: rhs
+        lhs%raw = rhs
+    end subroutine assign_object_char
+
+    !> Returns the length of the character sequence represented by the string.
+    elemental function get_len(self) result(val)
+        class(my_string_type), intent(in) :: self
+        integer :: val
+        val = merge(len(self%raw), 0, allocated(self%raw))
+    end function get_len
+
+    !> Returns the length of the character sequence without trailing spaces
+    !> represented by the string.
+    elemental function get_len_trim(self) result(val)
+        class(my_string_type), intent(in) :: self
+        integer :: val
+        val = merge(len_trim(self%raw), 0, allocated(self%raw))
+    end function get_len_trim
+
+    !> Return the character sequence represented by the string.
+    pure function get_char(self) result(character_string)
+        class(my_string_type), intent(in) :: self
+        character(len=:), allocatable :: character_string
+        if (allocated(self%raw)) then
+            character_string = self%raw
+        else
+            character_string = ""
+        end if
+    end function get_char
+
+    !> Return the character sequence represented by the string.
+    elemental function get_char_pos(self, pos) result(character_string)
+        class(my_string_type), intent(in) :: self
+        integer, intent(in) :: pos
+        character(len=1) :: character_string
+        if (allocated(self%raw)) then
+            character_string = self%raw(pos:pos)
+        else
+            character_string = ""
+        end if
+    end function get_char_pos
+
+    !> Return the character sequence represented by the string.
+    pure function get_char_range(self, start, last) result(character_string)
+        class(my_string_type), intent(in) :: self
+        integer, intent(in) :: start
+        integer, intent(in) :: last
+        character(len=last-start+1) :: character_string
+        if (allocated(self%raw)) then
+            character_string = self%raw(start:last)
+        else
+            character_string = ""
+        end if
+    end function get_char_range
+
+end module string_implementation
+
 ! SPDX-Identifer: MIT
-module test_string_intrinsic
+module test_string_class
     use stdlib_error, only : check
     use stdlib_string_type
+    use string_implementation
     implicit none
 
     abstract interface
         !> Actual tester working on a string type and a fixed length character
         !> representing the same character sequence
         subroutine check1_interface(str1, chr1)
-            import :: string_type
-            type(string_type), intent(in) :: str1
+            import :: my_string_type
+            type(my_string_type), intent(in) :: str1
             character(len=*), intent(in) :: chr1
         end subroutine check1_interface
 
         !> Actual tester working on two pairs of string type and fixed length
         !> character representing the same character sequences
         subroutine check2_interface(str1, chr1, str2, chr2)
-            import :: string_type
-            type(string_type), intent(in) :: str1, str2
+            import :: my_string_type
+            type(my_string_type), intent(in) :: str1, str2
             character(len=*), intent(in) :: chr1, chr2
         end subroutine check2_interface
     end interface
@@ -37,13 +146,13 @@ contains
     subroutine constructor_check1(chr1, checker)
         character(len=*), intent(in) :: chr1
         procedure(check1_interface) :: checker
-        call checker(string_type(chr1), chr1)
+        call checker(my_string_type(chr1), chr1)
     end subroutine constructor_check1
 
     !> Run the actual checker with a string type generated by assignment
     subroutine assignment_check1(chr1, checker)
         character(len=*), intent(in) :: chr1
-        type(string_type) :: str1
+        type(my_string_type) :: str1
         procedure(check1_interface) :: checker
         str1 = chr1
         call checker(str1, chr1)
@@ -64,25 +173,25 @@ contains
     subroutine constructor_check2(chr1, chr2, checker)
         character(len=*), intent(in) :: chr1, chr2
         procedure(check2_interface) :: checker
-        call checker(string_type(chr1), chr1, string_type(chr2), chr2)
+        call checker(my_string_type(chr1), chr1, my_string_type(chr2), chr2)
     end subroutine constructor_check2
 
     !> Run the actual checker with one string type generated by the custom constructor
     !> and the other by assignment
     subroutine mixed_check2(chr1, chr2, checker)
         character(len=*), intent(in) :: chr1, chr2
-        type(string_type) :: str1, str2
+        type(my_string_type) :: str1, str2
         procedure(check2_interface) :: checker
         str1 = chr1
         str2 = chr2
-        call checker(str1, chr1, string_type(chr2), chr2)
-        call checker(string_type(chr1), chr1, str2, chr2)
+        call checker(str1, chr1, my_string_type(chr2), chr2)
+        call checker(my_string_type(chr1), chr1, str2, chr2)
     end subroutine mixed_check2
 
     !> Run the actual checker with both string types generated by assignment
     subroutine assignment_check2(chr1, chr2, checker)
         character(len=*), intent(in) :: chr1, chr2
-        type(string_type) :: str1, str2
+        type(my_string_type) :: str1, str2
         procedure(check2_interface) :: checker
         str1 = chr1
         str2 = chr2
@@ -91,7 +200,7 @@ contains
 
     !> Generator for checking the lexical comparison
     subroutine gen_lgt(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(lgt(str1, str2) .eqv. lgt(chr1, chr2))
         call check(lgt(str1, chr2) .eqv. lgt(chr1, chr2))
@@ -99,7 +208,7 @@ contains
     end subroutine gen_lgt
 
     subroutine test_lgt
-        type(string_type) :: string
+        type(my_string_type) :: string
         logical :: res
 
         string = "bcd"
@@ -119,7 +228,7 @@ contains
 
     !> Generator for checking the lexical comparison
     subroutine gen_llt(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(llt(str1, str2) .eqv. llt(chr1, chr2))
         call check(llt(str1, chr2) .eqv. llt(chr1, chr2))
@@ -127,7 +236,7 @@ contains
     end subroutine gen_llt
 
     subroutine test_llt
-        type(string_type) :: string
+        type(my_string_type) :: string
         logical :: res
 
         string = "bcd"
@@ -147,7 +256,7 @@ contains
 
     !> Generator for checking the lexical comparison
     subroutine gen_lge(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(lge(str1, str2) .eqv. lge(chr1, chr2))
         call check(lge(str1, chr2) .eqv. lge(chr1, chr2))
@@ -155,7 +264,7 @@ contains
     end subroutine gen_lge
 
     subroutine test_lge
-        type(string_type) :: string
+        type(my_string_type) :: string
         logical :: res
 
         string = "bcd"
@@ -175,7 +284,7 @@ contains
 
     !> Generator for checking the lexical comparison
     subroutine gen_lle(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(lle(str1, str2) .eqv. lle(chr1, chr2))
         call check(lle(str1, chr2) .eqv. lle(chr1, chr2))
@@ -183,7 +292,7 @@ contains
     end subroutine gen_lle
 
     subroutine test_lle
-        type(string_type) :: string
+        type(my_string_type) :: string
         logical :: res
 
         string = "bcd"
@@ -203,13 +312,13 @@ contains
 
     !> Generator for checking the trimming of whitespace
     subroutine gen_trim(str1, chr1)
-        type(string_type), intent(in) :: str1
+        type(my_string_type), intent(in) :: str1
         character(len=*), intent(in) :: chr1
         call check(len(trim(str1)) == len(trim(chr1)))
     end subroutine gen_trim
 
     subroutine test_trim
-       type(string_type) :: string, trimmed_str
+       type(my_string_type) :: string, trimmed_str
 
        string = "Whitespace                            "
        trimmed_str = trim(string)
@@ -223,13 +332,13 @@ contains
 
     !> Generator for checking the length of the character sequence
     subroutine gen_len(str1, chr1)
-        type(string_type), intent(in) :: str1
+        type(my_string_type), intent(in) :: str1
         character(len=*), intent(in) :: chr1
         call check(len(str1) == len(chr1))
     end subroutine gen_len
 
     subroutine test_len
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: length
 
         string = "Some longer sentence for this example."
@@ -248,13 +357,13 @@ contains
 
     !> Generator for checking the length of the character sequence without whitespace
     subroutine gen_len_trim(str1, chr1)
-        type(string_type), intent(in) :: str1
+        type(my_string_type), intent(in) :: str1
         character(len=*), intent(in) :: chr1
         call check(len_trim(str1) == len_trim(chr1))
     end subroutine gen_len_trim
 
     subroutine test_len_trim
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: length
 
         string = "Some longer sentence for this example."
@@ -273,13 +382,13 @@ contains
 
     !> Generator for checking the left adjustment of the character sequence
     subroutine gen_adjustl(str1, chr1)
-        type(string_type), intent(in) :: str1
+        type(my_string_type), intent(in) :: str1
         character(len=*), intent(in) :: chr1
         call check(adjustl(str1) == adjustl(chr1))
     end subroutine gen_adjustl
 
     subroutine test_adjustl
-        type(string_type) :: string
+        type(my_string_type) :: string
 
         string = "                            Whitespace"
         string = adjustl(string)
@@ -290,13 +399,13 @@ contains
 
     !> Generator for checking the right adjustment of the character sequence
     subroutine gen_adjustr(str1, chr1)
-        type(string_type), intent(in) :: str1
+        type(my_string_type), intent(in) :: str1
         character(len=*), intent(in) :: chr1
         call check(adjustr(str1) == adjustr(chr1))
     end subroutine gen_adjustr
 
     subroutine test_adjustr
-        type(string_type) :: string
+        type(my_string_type) :: string
 
         string = "Whitespace                            "
         string = adjustr(string)
@@ -307,7 +416,7 @@ contains
 
     !> Generator for checking the presence of a character set in a character sequence
     subroutine gen_scan(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(scan(str1, str2) == scan(chr1, chr2))
         call check(scan(str1, chr2) == scan(chr1, chr2))
@@ -318,7 +427,7 @@ contains
     end subroutine gen_scan
 
     subroutine test_scan
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: pos
 
         string = "fortran"
@@ -338,7 +447,7 @@ contains
 
     !> Generator for checking the absence of a character set in a character sequence
     subroutine gen_verify(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(verify(str1, str2) == verify(chr1, chr2))
         call check(verify(str1, chr2) == verify(chr1, chr2))
@@ -349,7 +458,7 @@ contains
     end subroutine gen_verify
 
     subroutine test_verify
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: pos
 
         string = "fortran"
@@ -375,7 +484,7 @@ contains
 
     !> Generator for the repeatition of a character sequence
     subroutine gen_repeat(str1, chr1)
-        type(string_type), intent(in) :: str1
+        type(my_string_type), intent(in) :: str1
         character(len=*), intent(in) :: chr1
         integer :: i
         do i = 12, 3, -2
@@ -384,7 +493,7 @@ contains
     end subroutine gen_repeat
 
     subroutine test_repeat
-        type(string_type) :: string
+        type(my_string_type) :: string
 
         string = "What? "
         string = repeat(string, 3)
@@ -397,7 +506,7 @@ contains
 
     !> Generator for checking the substring search in a character string
     subroutine gen_index(str1, chr1, str2, chr2)
-        type(string_type), intent(in) :: str1, str2
+        type(my_string_type), intent(in) :: str1, str2
         character(len=*), intent(in) :: chr1, chr2
         call check(index(str1, str2) == index(chr1, chr2))
         call check(index(str1, chr2) == index(chr1, chr2))
@@ -408,7 +517,7 @@ contains
     end subroutine gen_index
 
     subroutine test_index
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: pos
 
         string = "Search this string for this expression"
@@ -427,7 +536,7 @@ contains
     end subroutine test_index
 
     subroutine test_char
-        type(string_type) :: string
+        type(my_string_type) :: string
         character(len=:), allocatable :: dlc
         character(len=1), allocatable :: chars(:)
 
@@ -446,7 +555,7 @@ contains
     end subroutine test_char
 
     subroutine test_ichar
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: code
 
         string = "Fortran"
@@ -455,7 +564,7 @@ contains
     end subroutine test_ichar
 
     subroutine test_iachar
-        type(string_type) :: string
+        type(my_string_type) :: string
         integer :: code
 
         string = "Fortran"
@@ -463,10 +572,175 @@ contains
         call check(code == iachar("F"))
     end subroutine test_iachar
 
-end module test_string_intrinsic
+    subroutine test_listdirected_io
+        type(my_string_type) :: string
+        integer :: io, stat
+        string = "Important saved value"
+
+        open(newunit=io, form="formatted", status="scratch")
+        write(io, *) string
+        write(io, *) ! Pad with a newline or we might run into EOF while reading
+
+        string = ""
+        rewind(io)
+
+        read(io, *, iostat=stat) string
+        close(io)
+
+        call check(stat == 0)
+        call check(len(string) == 21)
+        call check(string == "Important saved value")
+    end subroutine test_listdirected_io
+
+    subroutine test_formatted_io
+        type(my_string_type) :: string
+        integer :: io, stat
+        string = "Important saved value"
+
+        open(newunit=io, form="formatted", status="scratch")
+        write(io, '(dt)') string
+        write(io, '(a)') ! Pad with a newline or we might run into EOF while reading
+
+        string = ""
+        rewind(io)
+
+        read(io, *, iostat=stat) string
+        close(io)
+
+        call check(stat == 0)
+        call check(len(string) == 21)
+        call check(string == "Important saved value")
+    end subroutine test_formatted_io
+
+    subroutine test_unformatted_io
+        type(my_string_type) :: string
+        integer :: io
+        string = "Important saved value"
+
+        open(newunit=io, form="unformatted", status="scratch")
+        write(io) string
+
+        string = ""
+        rewind(io)
+
+        read(io) string
+        close(io)
+
+        call check(len(string) == 21)
+        call check(string == "Important saved value")
+    end subroutine test_unformatted_io
+
+    subroutine test_assignment
+        type(my_string_type) :: string
+
+        call check(len(string) == 0)
+
+        string = "Sequence"
+        call check(len(string) == 8)
+    end subroutine test_assignment
+
+    subroutine test_gt
+        type(my_string_type) :: string
+        logical :: res
+
+        string = "bcd"
+        res = string > "abc"
+        call check(res .eqv. .true.)
+
+        res = string > "bcd"
+        call check(res .eqv. .false.)
+
+        res = string > "cde"
+        call check(res .eqv. .false.)
+    end subroutine test_gt
+
+    subroutine test_lt
+        type(my_string_type) :: string
+        logical :: res
+
+        string = "bcd"
+        res = string < "abc"
+        call check(res .eqv. .false.)
+
+        res = string < "bcd"
+        call check(res .eqv. .false.)
+
+        res = string < "cde"
+        call check(res .eqv. .true.)
+    end subroutine test_lt
+
+    subroutine test_ge
+        type(my_string_type) :: string
+        logical :: res
+
+        string = "bcd"
+        res = string >= "abc"
+        call check(res .eqv. .true.)
+
+        res = string >= "bcd"
+        call check(res .eqv. .true.)
+
+        res = string >= "cde"
+        call check(res .eqv. .false.)
+    end subroutine test_ge
+
+    subroutine test_le
+        type(my_string_type) :: string
+        logical :: res
+
+        string = "bcd"
+        res = string <= "abc"
+        call check(res .eqv. .false.)
+
+        res = string <= "bcd"
+        call check(res .eqv. .true.)
+
+        res = string <= "cde"
+        call check(res .eqv. .true.)
+    end subroutine test_le
+
+    subroutine test_eq
+        type(my_string_type) :: string
+        logical :: res
+
+        string = "bcd"
+        res = string == "abc"
+        call check(res .eqv. .false.)
+
+        res = string == "bcd"
+        call check(res .eqv. .true.)
+
+        res = string == "cde"
+        call check(res .eqv. .false.)
+    end subroutine test_eq
+
+    subroutine test_ne
+        type(my_string_type) :: string
+        logical :: res
+
+        string = "bcd"
+        res = string /= "abc"
+        call check(res .eqv. .true.)
+
+        res = string /= "bcd"
+        call check(res .eqv. .false.)
+
+        res = string /= "cde"
+        call check(res .eqv. .true.)
+    end subroutine test_ne
+
+    subroutine test_concat
+        type(my_string_type) :: string
+
+        string = "Hello, "
+        string = string // "World!"
+        call check(len(string) == 13)
+    end subroutine test_concat
+
+end module test_string_class
 
 program tester
-    use test_string_intrinsic
+    use test_string_class
     implicit none
 
     call test_lgt
@@ -485,5 +759,16 @@ program tester
     call test_char
     call test_ichar
     call test_iachar
+    call test_listdirected_io
+    call test_formatted_io
+    call test_unformatted_io
+    call test_assignment
+    call test_gt
+    call test_lt
+    call test_ge
+    call test_le
+    call test_eq
+    call test_ne
+    call test_concat
 
 end program tester

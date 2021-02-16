@@ -3,7 +3,7 @@
 [![CI](https://github.com/awvwgk/stdlib_string/workflows/CI/badge.svg)](https://github.com/awvwgk/stdlib_string/actions)
 [![docs](https://github.com/awvwgk/stdlib_string/workflows/docs/badge.svg)](https://awvwgk.github.io/stdlib_string)
 
-This project contains an exploratory implementation for functional string handling.
+This project contains an exploratory implementation for object-oriented string handling in stdlib.
 
 For the original thread on string support continue the discussion in
 [stdlib#69](https://github.com/fortran-lang/stdlib/issues/69).
@@ -30,7 +30,7 @@ might work as well, but have not yet been checked.
 
 ## Documentation
 
-Preliminary specs are available [here](./doc/specs/stdlib_string_type.md).
+Preliminary specs are available [here](./doc/specs/stdlib_string_class.md).
 
 
 ## License
