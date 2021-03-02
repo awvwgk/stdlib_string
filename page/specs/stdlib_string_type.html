@@ -316,7 +316,7 @@
 <li><a href="#example_16">Example</a></li>
 </ul>
 </li>
-<li><a href="#lgt-function-lexical-greater">Lgt function (lexical greater)</a><ul>
+<li><a href="#lgt-function-lexical-greater-than">Lgt function (lexical greater than)</a><ul>
 <li><a href="#description_17">Description</a></li>
 <li><a href="#syntax_17">Syntax</a></li>
 <li><a href="#status_18">Status</a></li>
@@ -326,7 +326,7 @@
 <li><a href="#example_17">Example</a></li>
 </ul>
 </li>
-<li><a href="#llt-function-lexical-less">Llt function (lexical less)</a><ul>
+<li><a href="#llt-function-lexical-less-than">Llt function (lexical less than)</a><ul>
 <li><a href="#description_18">Description</a></li>
 <li><a href="#syntax_18">Syntax</a></li>
 <li><a href="#status_19">Status</a></li>
@@ -336,7 +336,7 @@
 <li><a href="#example_18">Example</a></li>
 </ul>
 </li>
-<li><a href="#lge-function-lexical-greater-or-equal">Lge function (lexical greater or equal)</a><ul>
+<li><a href="#lge-function-lexical-greater-than-or-equal">Lge function (lexical greater than or equal)</a><ul>
 <li><a href="#description_19">Description</a></li>
 <li><a href="#syntax_19">Syntax</a></li>
 <li><a href="#status_20">Status</a></li>
@@ -346,7 +346,7 @@
 <li><a href="#example_19">Example</a></li>
 </ul>
 </li>
-<li><a href="#lle-function-lexical-less-or-equal">Lle function (lexical less or equal)</a><ul>
+<li><a href="#lle-function-lexical-less-than-or-equal">Lle function (lexical less than or equal)</a><ul>
 <li><a href="#description_20">Description</a></li>
 <li><a href="#syntax_20">Syntax</a></li>
 <li><a href="#status_21">Status</a></li>
@@ -475,19 +475,19 @@ well as operators for working with character variables and constants.</p>
 <h2 id="derived-types-provided">Derived types provided</h2>
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="the-string_type-derived-type">The <code>string_type</code> derived type</h3>
-<p>The <code>string_type</code> is defined as a non-extenable derived type representing a
+<p>The <code>string_type</code> is defined as a non-extendible derived type representing a
 sequence of characters. The internal representation of the character sequence
 is implementation dependent and not visible for the user of the module.</p>
 <h4 id="status">Status</h4>
 <p>Experimental</p>
 <h2 id="procedures-and-methods-provided">Procedures and methods provided</h2>
-<p>Procedures returning <code>string_type</code> instances can usually used in elemental
+<p>Procedures returning <code>string_type</code> instances can usually be used in elemental
 context, while procedures returning scalar character values can only be
 used in a pure way.</p>
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="constructor-for-empty-string">Constructor for empty string</h3>
-<p>The module defines a default constructor to create an empty string type.</p>
 <h4 id="description">Description</h4>
+<p>The module defines a default constructor to create an empty string type.</p>
 <p>Creates a string instance representing an empty string.</p>
 <h4 id="syntax">Syntax</h4>
 <p><code>res = <a href="../../module/stdlib_string_type.html#interface-string_type">string_type</a> ()</code></p>
@@ -498,21 +498,22 @@ used in a pure way.</p>
 <h4 id="argument">Argument</h4>
 <p>None.</p>
 <h4 id="result-value">Result value</h4>
-<p>The result is an instance of <code>string_type</code>.</p>
+<p>The result is an instance of <code>string_type</code> with zero length.</p>
 <h4 id="example">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="n">string</span> <span class="o">=</span> <span class="n">string_type</span><span class="p">()</span>
-<span class="c">! len(string) == 0</span>
-<span class="k">end</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="n">string_type</span><span class="p">()</span>
+  <span class="c">! len(string) == 0</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="constructor-from-character-scalar">Constructor from character scalar</h3>
+<h4 id="description_1">Description</h4>
 <p>The module defines a default constructor to create a string type
 from a character scalar.</p>
-<h4 id="description_1">Description</h4>
 <p>Creates a string instance representing the input character scalar value.
 The constructor shall create an empty string if an unallocated deferred-length
 character variable is passed.</p>
@@ -527,21 +528,22 @@ character variable is passed.</p>
 <h4 id="result-value_1">Result value</h4>
 <p>The result is an instance of <code>string_type</code>.</p>
 <h4 id="example_1">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="n">string</span> <span class="o">=</span> <span class="n">string_type</span><span class="p">(</span><span class="s2">&quot;Sequence&quot;</span><span class="p">)</span>
-<span class="c">! len(string) == 8</span>
-<span class="n">string</span> <span class="o">=</span> <span class="n">string_type</span><span class="p">(</span><span class="s2">&quot; S p a c e d &quot;</span><span class="p">)</span>
-<span class="c">! len(string) == 9</span>
-<span class="k">end</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="n">string_type</span><span class="p">(</span><span class="s2">&quot;Sequence&quot;</span><span class="p">)</span>
+  <span class="c">! len(string) == 8</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="n">string_type</span><span class="p">(</span><span class="s2">&quot; S p a c e d &quot;</span><span class="p">)</span>
+  <span class="c">! len(string) == 13</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="assignment-of-character-scalar">Assignment of character scalar</h3>
+<h4 id="description_2">Description</h4>
 <p>The module defines an assignment operations, <code>=</code>, to create a string type
 from a character scalar.</p>
-<h4 id="description_2">Description</h4>
 <p>Creates a string instance representing the right-hand-side character scalar value.</p>
 <h4 id="syntax_2">Syntax</h4>
 <p><code>lhs = rhs</code></p>
@@ -550,13 +552,14 @@ from a character scalar.</p>
 <h4 id="class_2">Class</h4>
 <p>Elemntal subroutine, <code>assignment(=)</code>.</p>
 <h4 id="example_2">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="c">! len(string) == 0</span>
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Sequence&quot;</span>
-<span class="c">! len(string) == 8</span>
-<span class="k">end</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="c">! len(string) == 0</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Sequence&quot;</span>
+  <span class="c">! len(string) == 8</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -574,19 +577,20 @@ from a character scalar.</p>
 <h4 id="result-value_2">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_3">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">length</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">length</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Some longer sentence for this example.&quot;</span>
-<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! length == 38</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Some longer sentence for this example.&quot;</span>
+  <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! length == 38</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
-<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! length == 38</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
+  <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! length == 38</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -605,19 +609,20 @@ represented by the string.</p>
 <h4 id="result-value_3">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_4">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">length</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">length</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Some longer sentence for this example.&quot;</span>
-<span class="n">length</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! length == 38</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Some longer sentence for this example.&quot;</span>
+  <span class="n">length</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! length == 38</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
-<span class="n">length</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! length == 10</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
+  <span class="n">length</span> <span class="o">=</span> <span class="nb">len_trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! length == 10</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -638,14 +643,15 @@ represented by a <code>string_type</code>.</p>
 <h4 id="result-value_4">Result value</h4>
 <p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_5">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
-<span class="n">string</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! len(string) == 10</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! len(string) == 10</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -666,14 +672,15 @@ The length of the character sequence remains unchanged.</p>
 <h4 id="result-value_5">Result value</h4>
 <p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_6">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;                            Whitespace&quot;</span>
-<span class="n">string</span> <span class="o">=</span> <span class="nb">adjustl</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! char(string) == &quot;Whitespace                            &quot;</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;                            Whitespace&quot;</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="nb">adjustl</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! char(string) == &quot;Whitespace                            &quot;</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -694,14 +701,15 @@ The length of the character sequence remains unchanged.</p>
 <h4 id="result-value_6">Result value</h4>
 <p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_7">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
-<span class="n">string</span> <span class="o">=</span> <span class="nb">adjustr</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! char(string) == &quot;                            Whitespace&quot;</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Whitespace                            &quot;</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="nb">adjustr</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! char(string) == &quot;                            Whitespace&quot;</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -723,14 +731,15 @@ specified copies.</p>
 <h4 id="result-value_7">Result value</h4>
 <p>The result is a scalar <code>string_type</code> value.</p>
 <h4 id="example_8">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;What? &quot;</span>
-<span class="n">string</span> <span class="o">=</span> <span class="nb">repeat</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="c">! string == &quot;What? What? What? &quot;</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;What? &quot;</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="nb">repeat</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="c">! string == &quot;What? What? What? &quot;</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -750,15 +759,16 @@ specified copies.</p>
 <h4 id="result-value_8">Result value</h4>
 <p>The result is a scalar character value.</p>
 <h4 id="example_9">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Character sequence&quot;</span>
-<span class="n">dlc</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="c">! dlc == &quot;Character sequence&quot;</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Character sequence&quot;</span>
+  <span class="n">dlc</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="c">! dlc == &quot;Character sequence&quot;</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -779,18 +789,19 @@ specified copies.</p>
 <h4 id="result-value_9">Result value</h4>
 <p>The result is a scalar character value.</p>
 <h4 id="example_10">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">chars</span><span class="p">(:)</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">chars</span><span class="p">(:)</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Character sequence&quot;</span>
-<span class="n">dlc</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="c">! dlc == &quot;a&quot;</span>
-<span class="n">chars</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">18</span><span class="p">])</span>
-<span class="c">! chars == [&quot;a&quot;, &quot;a&quot;, &quot;e&quot;, &quot;e&quot;, &quot;u&quot;, &quot;e&quot;, &quot;e&quot;]</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Character sequence&quot;</span>
+  <span class="n">dlc</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="c">! dlc == &quot;a&quot;</span>
+  <span class="n">chars</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">18</span><span class="p">])</span>
+  <span class="c">! chars == [&quot;a&quot;, &quot;a&quot;, &quot;e&quot;, &quot;e&quot;, &quot;u&quot;, &quot;e&quot;, &quot;e&quot;]</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -812,21 +823,22 @@ specified copies.</p>
 <h4 id="result-value_10">Result value</h4>
 <p>The result is a scalar character value.</p>
 <h4 id="example_11">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span> <span class="k">allocatable</span> <span class="kd">::</span> <span class="n">dlc</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Fortran&quot;</span>
-<span class="n">dlc</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="c">! dlc == &quot;Fort&quot;</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Fortran&quot;</span>
+  <span class="n">dlc</span> <span class="o">=</span> <span class="nb">char</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+  <span class="c">! dlc == &quot;Fort&quot;</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="ichar-function">Ichar function</h3>
-<p>Character-to-integer conversion function.</p>
 <h4 id="description_12">Description</h4>
+<p>Character-to-integer conversion function.</p>
 <p>Returns the code for the character in the first character position of the
 character sequence in the system's native character set.</p>
 <h4 id="syntax_12">Syntax</h4>
@@ -842,20 +854,21 @@ character sequence in the system's native character set.</p>
 <h4 id="result-value_11">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_12">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">code</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">code</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Fortran&quot;</span>
-<span class="n">code</span> <span class="o">=</span> <span class="nb">ichar</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Fortran&quot;</span>
+  <span class="n">code</span> <span class="o">=</span> <span class="nb">ichar</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="iachar-function">Iachar function</h3>
-<p>Code in ASCII collating sequence.</p>
 <h4 id="description_13">Description</h4>
+<p>Code in ASCII collating sequence.</p>
 <p>Returns the code for the ASCII character in the first character position of
 the character sequences represent by the string.</p>
 <h4 id="syntax_13">Syntax</h4>
@@ -871,20 +884,21 @@ the character sequences represent by the string.</p>
 <h4 id="result-value_12">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_13">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">code</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">code</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Fortran&quot;</span>
-<span class="n">code</span> <span class="o">=</span> <span class="nb">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Fortran&quot;</span>
+  <span class="n">code</span> <span class="o">=</span> <span class="nb">iachar</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="index-function">Index function</h3>
-<p>Position of a <em>substring</em> within a <em>string</em>.</p>
 <h4 id="description_14">Description</h4>
+<p>Position of a <em>substring</em> within a <em>string</em>.</p>
 <p>Returns the position of the start of the leftmost or rightmost occurrence
 of string <em>substring</em> in <em>string</em>, counting from one. If <em>substring</em> is not
 present in <em>string</em>, zero is returned.</p>
@@ -903,28 +917,29 @@ present in <em>string</em>, zero is returned.</p>
 <h4 id="result-value_13">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_14">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">pos</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">pos</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Search this string for this expression&quot;</span>
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">index</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">)</span>
-<span class="c">! pos == 8</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Search this string for this expression&quot;</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">index</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 8</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">index</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<span class="c">! pos == 24</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">index</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;this&quot;</span><span class="p">,</span> <span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+  <span class="c">! pos == 24</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">index</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;This&quot;</span><span class="p">)</span>
-<span class="c">! pos == 0</span>
-<span class="k">end</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">index</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;This&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 0</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="scan-function">Scan function</h3>
+<h4 id="description_15">Description</h4>
 <p>Scan a <em>string</em> for the presence of a <em>set</em> of characters. Scans a <em>string</em> for
 any of the characters in a <em>set</em> of characters.</p>
-<h4 id="description_15">Description</h4>
 <p>If <em>back</em> is either absent or <em>false</em>, this function returns the position
 of the leftmost character of <em>string</em> that is in <em>set</em>. If <em>back</em> is <em>true</em>,
 the rightmost position is returned. If no character of <em>set</em> is found in
@@ -944,28 +959,29 @@ the rightmost position is returned. If no character of <em>set</em> is found in
 <h4 id="result-value_14">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_15">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">pos</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">pos</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;fortran&quot;</span>
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">scan</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;ao&quot;</span><span class="p">)</span>
-<span class="c">! pos == 2</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;fortran&quot;</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">scan</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;ao&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 2</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">scan</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;ao&quot;</span><span class="p">,</span> <span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<span class="c">! pos == 6</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">scan</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;ao&quot;</span><span class="p">,</span> <span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+  <span class="c">! pos == 6</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">scan</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;c++&quot;</span><span class="p">)</span>
-<span class="c">! pos == 0</span>
-<span class="k">end</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">scan</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;c++&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 0</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="verify-function">Verify function</h3>
-<p>Scan a string for the absence of a set of characters. Verifies that all
-the characters in string belong to the set of characters in set.</p>
 <h4 id="description_16">Description</h4>
+<p>Scan a <em>string</em> for the absence of a <em>set</em> of characters. Verifies that all
+the characters in <em>string</em> belong to the set of characters in <em>set</em>.</p>
 <p>If <em>back</em> is either absent or <em>false</em>, this function returns the position
 of the leftmost character of <em>string</em> that is not in <em>set</em>. If <em>back</em> is <em>true</em>,
 the rightmost position is returned. If all characters of <em>string</em> are found
@@ -985,33 +1001,34 @@ in <em>set</em>, the result is zero.</p>
 <h4 id="result-value_15">Result value</h4>
 <p>The result is a default integer scalar value.</p>
 <h4 id="example_16">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">pos</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">pos</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;fortran&quot;</span>
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;ao&quot;</span><span class="p">)</span>
-<span class="c">! pos == 1</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;fortran&quot;</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;ao&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 1</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;fo&quot;</span><span class="p">)</span>
-<span class="c">! pos == 3</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;fo&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 3</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;c++&quot;</span><span class="p">)</span>
-<span class="c">! pos == 1</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;c++&quot;</span><span class="p">)</span>
+  <span class="c">! pos == 1</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
-<span class="c">! pos == 7</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="n">back</span><span class="o">=</span><span class="p">.</span><span class="n">true</span><span class="p">.)</span>
+  <span class="c">! pos == 7</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
-<span class="c">! pos == 0</span>
-<span class="k">end</span>
+  <span class="n">pos</span> <span class="o">=</span> <span class="nb">verify</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+  <span class="c">! pos == 0</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-<h3 id="lgt-function-lexical-greater">Lgt function (lexical greater)</h3>
-<p>Lexically compare the order of two character sequences being greater.</p>
+<h3 id="lgt-function-lexical-greater-than">Lgt function (lexical greater than)</h3>
 <h4 id="description_17">Description</h4>
+<p>Lexically compare the order of two character sequences being greater than.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic <code>lgt</code> procedure.</p>
@@ -1029,27 +1046,28 @@ This defines three procedures overloading the intrinsic <code>lgt</code> procedu
 <h4 id="result-value_16">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_17">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lgt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lgt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lgt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lgt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lgt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .false.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lgt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .false.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-<h3 id="llt-function-lexical-less">Llt function (lexical less)</h3>
-<p>Lexically compare the order of two character sequences being less.</p>
+<h3 id="llt-function-lexical-less-than">Llt function (lexical less than)</h3>
 <h4 id="description_18">Description</h4>
+<p>Lexically compare the order of two character sequences being less than.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic <code>llt</code> procedure.</p>
@@ -1067,27 +1085,29 @@ This defines three procedures overloading the intrinsic <code>llt</code> procedu
 <h4 id="result-value_17">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_18">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="nb">llt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">llt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">llt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">llt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">llt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .true.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">llt</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .true.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-<h3 id="lge-function-lexical-greater-or-equal">Lge function (lexical greater or equal)</h3>
-<p>Lexically compare the order of two character sequences being greater or equal.</p>
+<h3 id="lge-function-lexical-greater-than-or-equal">Lge function (lexical greater than or equal)</h3>
 <h4 id="description_19">Description</h4>
+<p>Lexically compare the order of two character sequences being greater than
+or equal.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic <code>lge</code> procedure.</p>
@@ -1105,27 +1125,29 @@ This defines three procedures overloading the intrinsic <code>lge</code> procedu
 <h4 id="result-value_18">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_19">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lge</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lge</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lge</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lge</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lge</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .false.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lge</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .false.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-<h3 id="lle-function-lexical-less-or-equal">Lle function (lexical less or equal)</h3>
-<p>Lexically compare the order of two character sequences being less or equal.</p>
+<h3 id="lle-function-lexical-less-than-or-equal">Lle function (lexical less than or equal)</h3>
 <h4 id="description_20">Description</h4>
+<p>Lexically compare the order of two character sequences being less than
+or equal.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic <code>lle</code> procedure.</p>
@@ -1143,36 +1165,39 @@ This defines three procedures overloading the intrinsic <code>lle</code> procedu
 <h4 id="result-value_19">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_20">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lle</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lle</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lle</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lle</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;bcd&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="nb">lle</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
-<span class="c">! res .eqv. .true.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="nb">lle</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;cde&quot;</span><span class="p">)</span>
+  <span class="c">! res .eqv. .true.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="comparison-operator-greater">Comparison operator greater</h3>
-<p>Compare the order of two character sequences being greater.</p>
 <h4 id="description_21">Description</h4>
+<p>Compare the order of two character sequences being greater.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic <code>operator(.gt.)</code>.</p>
+This defines three procedures overloading the intrinsic <code>operator(&gt;)</code>
+and <code>operator(.gt.)</code>.</p>
 <h4 id="syntax_21">Syntax</h4>
 <p><code>res = lhs &gt; rhs</code></p>
+<p><code>res = lhs .gt. rhs</code></p>
 <h4 id="status_22">Status</h4>
 <p>Experimental</p>
 <h4 id="class_21">Class</h4>
-<p>Elemental function, <code>operator(.gt.)</code>.</p>
+<p>Elemental function, <code>operator(&gt;)</code> and <code>operator(.gt.)</code>.</p>
 <h4 id="argument_20">Argument</h4>
 <ul>
 <li><code>lhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
@@ -1181,36 +1206,39 @@ This defines three procedures overloading the intrinsic <code>operator(.gt.)</co
 <h4 id="result-value_20">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_21">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="s2">&quot;abc&quot;</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="s2">&quot;abc&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="s2">&quot;cde&quot;</span>
-<span class="c">! res .eqv. .false.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="s2">&quot;cde&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="comparison-operator-less">Comparison operator less</h3>
-<p>Compare the order of two character sequences being less.</p>
 <h4 id="description_22">Description</h4>
+<p>Compare the order of two character sequences being less.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic <code>operator(.lt.)</code>.</p>
+This defines three procedures overloading the intrinsic <code>operator(&lt;)</code>
+and <code>operator(.lt.)</code>.</p>
 <h4 id="syntax_22">Syntax</h4>
 <p><code>res = lhs &lt; rhs</code></p>
+<p><code>res = lhs .lt. rhs</code></p>
 <h4 id="status_23">Status</h4>
 <p>Experimental</p>
 <h4 id="class_22">Class</h4>
-<p>Elemental function, <code>operator(.lt.)</code>.</p>
+<p>Elemental function, <code>operator(&lt;)</code> and <code>operator(.lt.)</code>.</p>
 <h4 id="argument_21">Argument</h4>
 <ul>
 <li><code>lhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
@@ -1219,36 +1247,39 @@ This defines three procedures overloading the intrinsic <code>operator(.lt.)</co
 <h4 id="result-value_21">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_22">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="s2">&quot;abc&quot;</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="s2">&quot;abc&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="s2">&quot;cde&quot;</span>
-<span class="c">! res .eqv. .true.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="s2">&quot;cde&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="comparison-operator-greater-or-equal">Comparison operator greater or equal</h3>
-<p>Compare the order of two character sequences being greater or equal.</p>
 <h4 id="description_23">Description</h4>
+<p>Compare the order of two character sequences being greater or equal.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic <code>operator(.ge.)</code>.</p>
+This defines three procedures overloading the intrinsic <code>operator(&gt;=)</code>
+and <code>operator(.ge.)</code>.</p>
 <h4 id="syntax_23">Syntax</h4>
 <p><code>res = lhs &gt;= rhs</code></p>
+<p><code>res = lhs .ge. rhs</code></p>
 <h4 id="status_24">Status</h4>
 <p>Experimental</p>
 <h4 id="class_23">Class</h4>
-<p>Elemental function, <code>operator(.ge.)</code>.</p>
+<p>Elemental function, <code>operator(&gt;=)</code> and <code>operator(.ge.)</code>.</p>
 <h4 id="argument_22">Argument</h4>
 <ul>
 <li><code>lhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
@@ -1257,36 +1288,39 @@ This defines three procedures overloading the intrinsic <code>operator(.ge.)</co
 <h4 id="result-value_22">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_23">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;=</span> <span class="s2">&quot;abc&quot;</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;=</span> <span class="s2">&quot;abc&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;=</span> <span class="s2">&quot;cde&quot;</span>
-<span class="c">! res .eqv. .false.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&gt;=</span> <span class="s2">&quot;cde&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="comparison-operator-less-or-equal">Comparison operator less or equal</h3>
-<p>Compare the order of two character sequences being less or equal.</p>
 <h4 id="description_24">Description</h4>
+<p>Compare the order of two character sequences being less or equal.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic <code>operator(.le.)</code>.</p>
+This defines three procedures overloading the intrinsic <code>operator(&lt;=)</code>
+and <code>operator(.le.)</code>.</p>
 <h4 id="syntax_24">Syntax</h4>
 <p><code>res = lhs &lt;= rhs</code></p>
+<p><code>res = lhs .le. rhs</code></p>
 <h4 id="status_25">Status</h4>
 <p>Experimental</p>
 <h4 id="class_24">Class</h4>
-<p>Elemental function, <code>operator(.le.)</code>.</p>
+<p>Elemental function, <code>operator(&lt;=)</code> and <code>operator(.le.)</code>.</p>
 <h4 id="argument_23">Argument</h4>
 <ul>
 <li><code>lhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
@@ -1295,36 +1329,39 @@ This defines three procedures overloading the intrinsic <code>operator(.le.)</co
 <h4 id="result-value_23">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_24">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="s2">&quot;abc&quot;</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="s2">&quot;abc&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="s2">&quot;cde&quot;</span>
-<span class="c">! res .eqv. .true.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">&lt;=</span> <span class="s2">&quot;cde&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="comparison-operator-equal">Comparison operator equal</h3>
-<p>Compare two character sequences for equality.</p>
 <h4 id="description_25">Description</h4>
+<p>Compare two character sequences for equality.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic <code>operator(.eq.)</code>.</p>
+This defines three procedures overloading the intrinsic <code>operator(==)</code>
+and <code>operator(.eq.)</code>.</p>
 <h4 id="syntax_25">Syntax</h4>
 <p><code>res = lhs == rhs</code></p>
+<p><code>res = lhs .eq. rhs</code></p>
 <h4 id="status_26">Status</h4>
 <p>Experimental</p>
 <h4 id="class_25">Class</h4>
-<p>Elemental function, <code>operator(.eq.)</code>.</p>
+<p>Elemental function, <code>operator(==)</code> and <code>operator(.eq.)</code>.</p>
 <h4 id="argument_24">Argument</h4>
 <ul>
 <li><code>lhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
@@ -1333,36 +1370,39 @@ This defines three procedures overloading the intrinsic <code>operator(.eq.)</co
 <h4 id="result-value_24">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_25">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;abc&quot;</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;abc&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;cde&quot;</span>
-<span class="c">! res .eqv. .false.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">==</span> <span class="s2">&quot;cde&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="comparison-operator-not-equal">Comparison operator not equal</h3>
-<p>Compare two character sequences for inequality.</p>
 <h4 id="description_26">Description</h4>
+<p>Compare two character sequences for inequality.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic <code>operator(.ne.)</code>.</p>
+This defines three procedures overloading the intrinsic <code>operator(/=)</code>
+and <code>operator(.ne.)</code>.</p>
 <h4 id="syntax_26">Syntax</h4>
 <p><code>res = lhs /= rhs</code></p>
+<p><code>res = lhs .ne. rhs</code></p>
 <h4 id="status_27">Status</h4>
 <p>Experimental</p>
 <h4 id="class_26">Class</h4>
-<p>Elemental function, <code>operator(.ne.)</code>.</p>
+<p>Elemental function, <code>operator(/=)</code> and <code>operator(.ne.)</code>.</p>
 <h4 id="argument_25">Argument</h4>
 <ul>
 <li><code>lhs</code>: Either scalar character value or string type. This argument is <code>intent(in)</code>.</li>
@@ -1371,27 +1411,28 @@ This defines three procedures overloading the intrinsic <code>operator(.ne.)</co
 <h4 id="result-value_25">Result value</h4>
 <p>The result is a default logical scalar value.</p>
 <h4 id="example_26">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">logical</span> <span class="kd">::</span> <span class="n">res</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">/=</span> <span class="s2">&quot;abc&quot;</span>
-<span class="c">! res .eqv. .true.</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">/=</span> <span class="s2">&quot;abc&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">/=</span> <span class="s2">&quot;bcd&quot;</span>
-<span class="c">! res .eqv. .false.</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">/=</span> <span class="s2">&quot;bcd&quot;</span>
+  <span class="c">! res .eqv. .false.</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">/=</span> <span class="s2">&quot;cde&quot;</span>
-<span class="c">! res .eqv. .true.</span>
-<span class="k">end</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">string</span> <span class="o">/=</span> <span class="s2">&quot;cde&quot;</span>
+  <span class="c">! res .eqv. .true.</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 <h3 id="concatenation-operator">Concatenation operator</h3>
-<p>Concatenate two character sequences.</p>
 <h4 id="description_27">Description</h4>
+<p>Concatenate two character sequences.</p>
 <p>The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
 This defines three procedures overloading the intrinsic <code>operator(//)</code>.</p>
@@ -1409,14 +1450,15 @@ This defines three procedures overloading the intrinsic <code>operator(//)</code
 <h4 id="result-value_26">Result value</h4>
 <p>The result is an instance of <code>string_type</code>.</p>
 <h4 id="example_27">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Hello, &quot;</span>
-<span class="n">string</span> <span class="o">=</span> <span class="n">string</span> <span class="o">//</span> <span class="s2">&quot;World!&quot;</span>
-<span class="c">! len(string) == 13</span>
-<span class="k">end</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Hello, &quot;</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="n">string</span> <span class="o">//</span> <span class="s2">&quot;World!&quot;</span>
+  <span class="c">! len(string) == 13</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -1441,20 +1483,21 @@ holding the length of the following character record.</p>
   This argument is <code>intent(inout)</code>.</li>
 </ul>
 <h4 id="example_28">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
 
-<span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;unformatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
-<span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;unformatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
 
-<span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+  <span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
 
-<span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
-<span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -1485,21 +1528,22 @@ output. Requesting namelist output will raise an error.</p>
   This argument is <code>intent(inout)</code>.</li>
 </ul>
 <h4 id="example_29">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
 
-<span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;formatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
-<span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
-<span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+  <span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;formatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 
-<span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+  <span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
 
-<span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
-<span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -1525,20 +1569,21 @@ holding the length of the following character record.</p>
   This argument is <code>intent(inout)</code>.</li>
 </ul>
 <h4 id="example_30">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
 
-<span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;unformatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
-<span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;unformatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
 
-<span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+  <span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
 
-<span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
-<span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -1571,21 +1616,22 @@ Requesting <code>dt</code> formatted input or namelist output will raise an erro
   This argument is <code>intent(inout)</code>.</li>
 </ul>
 <h4 id="example_31">Example</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">use </span><span class="n">stdlib_string_type</span>
-<span class="k">implicit none</span>
-<span class="k">type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
-<span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">program </span><span class="n">demo</span>
+  <span class="k">use </span><span class="n">stdlib_string_type</span>
+  <span class="k">implicit none</span>
+<span class="k">  type</span><span class="p">(</span><span class="n">string_type</span><span class="p">)</span> <span class="kd">::</span> <span class="n">string</span>
+  <span class="kt">integer</span> <span class="kd">::</span> <span class="n">io</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Important saved value&quot;</span>
 
-<span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;formatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
-<span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
-<span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+  <span class="k">open</span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">io</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="s2">&quot;formatted&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;scratch&quot;</span><span class="p">)</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">write</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 
-<span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+  <span class="k">rewind</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
 
-<span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
-<span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
-<span class="k">end</span>
+  <span class="k">read</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span> <span class="n">string</span>
+  <span class="k">close</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+<span class="k">end program </span><span class="n">demo</span>
 </code></pre></div>
     </div>
     
@@ -1629,7 +1675,7 @@ Requesting <code>dt</code> formatted input or namelist output will raise an erro
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-02-17 22:15  
+             on 2021-03-02 18:35  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> stdlib_string was developed by fortran-lang/stdlib contributors</p></div>
