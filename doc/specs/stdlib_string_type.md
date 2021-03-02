@@ -19,7 +19,7 @@ well as operators for working with character variables and constants.
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### The `string_type` derived type
 
-The `string_type` is defined as a non-extenable derived type representing a
+The `string_type` is defined as a non-extendible derived type representing a
 sequence of characters. The internal representation of the character sequence
 is implementation dependent and not visible for the user of the module.
 
@@ -30,7 +30,7 @@ Experimental
 
 ## Procedures and methods provided
 
-Procedures returning `string_type` instances can usually used in elemental
+Procedures returning `string_type` instances can usually be used in elemental
 context, while procedures returning scalar character values can only be
 used in a pure way.
 
@@ -38,9 +38,9 @@ used in a pure way.
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Constructor for empty string
 
-The module defines a default constructor to create an empty string type.
-
 #### Description
+
+The module defines a default constructor to create an empty string type.
 
 Creates a string instance representing an empty string.
 
@@ -62,27 +62,28 @@ None.
 
 #### Result value
 
-The result is an instance of `string_type`.
+The result is an instance of `string_type` with zero length.
 
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-string = string_type()
-! len(string) == 0
-end
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  string = string_type()
+  ! len(string) == 0
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Constructor from character scalar
 
+#### Description
+
 The module defines a default constructor to create a string type
 from a character scalar.
-
-#### Description
 
 Creates a string instance representing the input character scalar value.
 The constructor shall create an empty string if an unallocated deferred-length
@@ -111,24 +112,25 @@ The result is an instance of `string_type`.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-string = string_type("Sequence")
-! len(string) == 8
-string = string_type(" S p a c e d ")
-! len(string) == 9
-end
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  string = string_type("Sequence")
+  ! len(string) == 8
+  string = string_type(" S p a c e d ")
+  ! len(string) == 13
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Assignment of character scalar
 
+#### Description
+
 The module defines an assignment operations, `=`, to create a string type
 from a character scalar.
-
-#### Description
 
 Creates a string instance representing the right-hand-side character scalar value.
 
@@ -147,13 +149,14 @@ Elemntal subroutine, `assignment(=)`.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-! len(string) == 0
-string = "Sequence"
-! len(string) == 8
-end
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  ! len(string) == 0
+  string = "Sequence"
+  ! len(string) == 8
+end program demo
 ```
 
 
@@ -187,19 +190,20 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: length
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: length
 
-string = "Some longer sentence for this example."
-length = len(string)
-! length == 38
+  string = "Some longer sentence for this example."
+  length = len(string)
+  ! length == 38
 
-string = "Whitespace                            "
-length = len(string)
-! length == 38
-end
+  string = "Whitespace                            "
+  length = len(string)
+  ! length == 38
+end program demo
 ```
 
 
@@ -234,19 +238,20 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: length
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: length
 
-string = "Some longer sentence for this example."
-length = len_trim(string)
-! length == 38
+  string = "Some longer sentence for this example."
+  length = len_trim(string)
+  ! length == 38
 
-string = "Whitespace                            "
-length = len_trim(string)
-! length == 10
-end
+  string = "Whitespace                            "
+  length = len_trim(string)
+  ! length == 10
+end program demo
 ```
 
 
@@ -281,14 +286,15 @@ The result is a scalar `string_type` value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
 
-string = "Whitespace                            "
-string = trim(string)
-! len(string) == 10
-end
+  string = "Whitespace                            "
+  string = trim(string)
+  ! len(string) == 10
+end program demo
 ```
 
 
@@ -323,14 +329,15 @@ The result is a scalar `string_type` value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
 
-string = "                            Whitespace"
-string = adjustl(string)
-! char(string) == "Whitespace                            "
-end
+  string = "                            Whitespace"
+  string = adjustl(string)
+  ! char(string) == "Whitespace                            "
+end program demo
 ```
 
 
@@ -365,14 +372,15 @@ The result is a scalar `string_type` value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
 
-string = "Whitespace                            "
-string = adjustr(string)
-! char(string) == "                            Whitespace"
-end
+  string = "Whitespace                            "
+  string = adjustr(string)
+  ! char(string) == "                            Whitespace"
+end program demo
 ```
 
 
@@ -408,14 +416,15 @@ The result is a scalar `string_type` value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
 
-string = "What? "
-string = repeat(string, 3)
-! string == "What? What? What? "
-end
+  string = "What? "
+  string = repeat(string, 3)
+  ! string == "What? What? What? "
+end program demo
 ```
 
 
@@ -449,15 +458,16 @@ The result is a scalar character value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-character(len=:), allocatable :: dlc
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  character(len=:), allocatable :: dlc
 
-string = "Character sequence"
-dlc = char(string)
-! dlc == "Character sequence"
-end
+  string = "Character sequence"
+  dlc = char(string)
+  ! dlc == "Character sequence"
+end program demo
 ```
 
 
@@ -492,18 +502,19 @@ The result is a scalar character value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-character(len=:), allocatable :: dlc
-character(len=1), allocatable :: chars(:)
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  character(len=:), allocatable :: dlc
+  character(len=1), allocatable :: chars(:)
 
-string = "Character sequence"
-dlc = char(string, 3)
-! dlc == "a"
-chars = char(string, [3, 5, 8, 12, 14, 15, 18])
-! chars == ["a", "a", "e", "e", "u", "e", "e"]
-end
+  string = "Character sequence"
+  dlc = char(string, 3)
+  ! dlc == "a"
+  chars = char(string, [3, 5, 8, 12, 14, 15, 18])
+  ! chars == ["a", "a", "e", "e", "u", "e", "e"]
+end program demo
 ```
 
 
@@ -539,24 +550,25 @@ The result is a scalar character value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-character(len=:), allocatable :: dlc
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  character(len=:), allocatable :: dlc
 
-string = "Fortran"
-dlc = char(string, 1, 4)
-! dlc == "Fort"
-end
+  string = "Fortran"
+  dlc = char(string, 1, 4)
+  ! dlc == "Fort"
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Ichar function
 
-Character-to-integer conversion function.
-
 #### Description
+
+Character-to-integer conversion function.
 
 Returns the code for the character in the first character position of the
 character sequence in the system's native character set.
@@ -584,23 +596,24 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: code
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: code
 
-string = "Fortran"
-code = ichar(string)
-end
+  string = "Fortran"
+  code = ichar(string)
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Iachar function
 
-Code in ASCII collating sequence.
-
 #### Description
+
+Code in ASCII collating sequence.
 
 Returns the code for the ASCII character in the first character position of
 the character sequences represent by the string.
@@ -628,23 +641,24 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: code
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: code
 
-string = "Fortran"
-code = iachar(string)
-end
+  string = "Fortran"
+  code = iachar(string)
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Index function
 
-Position of a *substring* within a *string*.
-
 #### Description
+
+Position of a *substring* within a *string*.
 
 Returns the position of the start of the leftmost or rightmost occurrence
 of string *substring* in *string*, counting from one. If *substring* is not
@@ -675,31 +689,32 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: pos
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: pos
 
-string = "Search this string for this expression"
-pos = index(string, "this")
-! pos == 8
+  string = "Search this string for this expression"
+  pos = index(string, "this")
+  ! pos == 8
 
-pos = index(string, "this", back=.true.)
-! pos == 24
+  pos = index(string, "this", back=.true.)
+  ! pos == 24
 
-pos = index(string, "This")
-! pos == 0
-end
+  pos = index(string, "This")
+  ! pos == 0
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Scan function
 
+#### Description
+
 Scan a *string* for the presence of a *set* of characters. Scans a *string* for
 any of the characters in a *set* of characters.
-
-#### Description
 
 If *back* is either absent or *false*, this function returns the position
 of the leftmost character of *string* that is in *set*. If *back* is *true*,
@@ -731,31 +746,32 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: pos
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: pos
 
-string = "fortran"
-pos = scan(string, "ao")
-! pos == 2
+  string = "fortran"
+  pos = scan(string, "ao")
+  ! pos == 2
 
-pos = scan(string, "ao", .true.)
-! pos == 6
+  pos = scan(string, "ao", .true.)
+  ! pos == 6
 
-pos = scan(string, "c++")
-! pos == 0
-end
+  pos = scan(string, "c++")
+  ! pos == 0
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Verify function
 
-Scan a string for the absence of a set of characters. Verifies that all
-the characters in string belong to the set of characters in set.
-
 #### Description
+
+Scan a *string* for the absence of a *set* of characters. Verifies that all
+the characters in *string* belong to the set of characters in *set*.
 
 If *back* is either absent or *false*, this function returns the position
 of the leftmost character of *string* that is not in *set*. If *back* is *true*,
@@ -787,36 +803,37 @@ The result is a default integer scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: pos
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: pos
 
-string = "fortran"
-pos = verify(string, "ao")
-! pos == 1
+  string = "fortran"
+  pos = verify(string, "ao")
+  ! pos == 1
 
-pos = verify(string, "fo")
-! pos == 3
+  pos = verify(string, "fo")
+  ! pos == 3
 
-pos = verify(string, "c++")
-! pos == 1
+  pos = verify(string, "c++")
+  ! pos == 1
 
-pos = verify(string, "c++", back=.true.)
-! pos == 7
+  pos = verify(string, "c++", back=.true.)
+  ! pos == 7
 
-pos = verify(string, string)
-! pos == 0
-end
+  pos = verify(string, string)
+  ! pos == 0
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-### Lgt function (lexical greater)
-
-Lexically compare the order of two character sequences being greater.
+### Lgt function (lexical greater than)
 
 #### Description
+
+Lexically compare the order of two character sequences being greater than.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
@@ -846,30 +863,31 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = lgt(string, "abc")
-! res .eqv. .true.
+  string = "bcd"
+  res = lgt(string, "abc")
+  ! res .eqv. .true.
 
-res = lgt(string, "bcd")
-! res .eqv. .false.
+  res = lgt(string, "bcd")
+  ! res .eqv. .false.
 
-res = lgt(string, "cde")
-! res .eqv. .false.
-end
+  res = lgt(string, "cde")
+  ! res .eqv. .false.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-### Llt function (lexical less)
-
-Lexically compare the order of two character sequences being less.
+### Llt function (lexical less than)
 
 #### Description
+
+Lexically compare the order of two character sequences being less than.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
@@ -899,30 +917,32 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = llt(string, "abc")
-! res .eqv. .false.
+  string = "bcd"
+  res = llt(string, "abc")
+  ! res .eqv. .false.
 
-res = llt(string, "bcd")
-! res .eqv. .false.
+  res = llt(string, "bcd")
+  ! res .eqv. .false.
 
-res = llt(string, "cde")
-! res .eqv. .true.
-end
+  res = llt(string, "cde")
+  ! res .eqv. .true.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-### Lge function (lexical greater or equal)
-
-Lexically compare the order of two character sequences being greater or equal.
+### Lge function (lexical greater than or equal)
 
 #### Description
+
+Lexically compare the order of two character sequences being greater than
+or equal.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
@@ -952,30 +972,32 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = lge(string, "abc")
-! res .eqv. .true.
+  string = "bcd"
+  res = lge(string, "abc")
+  ! res .eqv. .true.
 
-res = lge(string, "bcd")
-! res .eqv. .true.
+  res = lge(string, "bcd")
+  ! res .eqv. .true.
 
-res = lge(string, "cde")
-! res .eqv. .false.
-end
+  res = lge(string, "cde")
+  ! res .eqv. .false.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
-### Lle function (lexical less or equal)
-
-Lexically compare the order of two character sequences being less or equal.
+### Lle function (lexical less than or equal)
 
 #### Description
+
+Lexically compare the order of two character sequences being less than
+or equal.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
@@ -1005,38 +1027,42 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = lle(string, "abc")
-! res .eqv. .false.
+  string = "bcd"
+  res = lle(string, "abc")
+  ! res .eqv. .false.
 
-res = lle(string, "bcd")
-! res .eqv. .true.
+  res = lle(string, "bcd")
+  ! res .eqv. .true.
 
-res = lle(string, "cde")
-! res .eqv. .true.
-end
+  res = lle(string, "cde")
+  ! res .eqv. .true.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator greater
 
-Compare the order of two character sequences being greater.
-
 #### Description
+
+Compare the order of two character sequences being greater.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic `operator(.gt.)`.
+This defines three procedures overloading the intrinsic `operator(>)`
+and `operator(.gt.)`.
 
 #### Syntax
 
 `res = lhs > rhs`
+
+`res = lhs .gt. rhs`
 
 #### Status
 
@@ -1044,7 +1070,7 @@ Experimental
 
 #### Class
 
-Elemental function, `operator(.gt.)`.
+Elemental function, `operator(>)` and `operator(.gt.)`.
 
 #### Argument
 
@@ -1058,38 +1084,42 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = string > "abc"
-! res .eqv. .true.
+  string = "bcd"
+  res = string > "abc"
+  ! res .eqv. .true.
 
-res = string > "bcd"
-! res .eqv. .false.
+  res = string > "bcd"
+  ! res .eqv. .false.
 
-res = string > "cde"
-! res .eqv. .false.
-end
+  res = string > "cde"
+  ! res .eqv. .false.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator less
 
-Compare the order of two character sequences being less.
-
 #### Description
+
+Compare the order of two character sequences being less.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic `operator(.lt.)`.
+This defines three procedures overloading the intrinsic `operator(<)`
+and `operator(.lt.)`.
 
 #### Syntax
 
 `res = lhs < rhs`
+
+`res = lhs .lt. rhs`
 
 #### Status
 
@@ -1097,7 +1127,7 @@ Experimental
 
 #### Class
 
-Elemental function, `operator(.lt.)`.
+Elemental function, `operator(<)` and `operator(.lt.)`.
 
 #### Argument
 
@@ -1111,38 +1141,42 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = string < "abc"
-! res .eqv. .false.
+  string = "bcd"
+  res = string < "abc"
+  ! res .eqv. .false.
 
-res = string < "bcd"
-! res .eqv. .false.
+  res = string < "bcd"
+  ! res .eqv. .false.
 
-res = string < "cde"
-! res .eqv. .true.
-end
+  res = string < "cde"
+  ! res .eqv. .true.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator greater or equal
 
-Compare the order of two character sequences being greater or equal.
-
 #### Description
+
+Compare the order of two character sequences being greater or equal.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic `operator(.ge.)`.
+This defines three procedures overloading the intrinsic `operator(>=)`
+and `operator(.ge.)`.
 
 #### Syntax
 
 `res = lhs >= rhs`
+
+`res = lhs .ge. rhs`
 
 #### Status
 
@@ -1150,7 +1184,7 @@ Experimental
 
 #### Class
 
-Elemental function, `operator(.ge.)`.
+Elemental function, `operator(>=)` and `operator(.ge.)`.
 
 #### Argument
 
@@ -1164,38 +1198,42 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = string >= "abc"
-! res .eqv. .true.
+  string = "bcd"
+  res = string >= "abc"
+  ! res .eqv. .true.
 
-res = string >= "bcd"
-! res .eqv. .true.
+  res = string >= "bcd"
+  ! res .eqv. .true.
 
-res = string >= "cde"
-! res .eqv. .false.
-end
+  res = string >= "cde"
+  ! res .eqv. .false.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator less or equal
 
-Compare the order of two character sequences being less or equal.
-
 #### Description
+
+Compare the order of two character sequences being less or equal.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic `operator(.le.)`.
+This defines three procedures overloading the intrinsic `operator(<=)`
+and `operator(.le.)`.
 
 #### Syntax
 
 `res = lhs <= rhs`
+
+`res = lhs .le. rhs`
 
 #### Status
 
@@ -1203,7 +1241,7 @@ Experimental
 
 #### Class
 
-Elemental function, `operator(.le.)`.
+Elemental function, `operator(<=)` and `operator(.le.)`.
 
 #### Argument
 
@@ -1217,38 +1255,42 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = string <= "abc"
-! res .eqv. .false.
+  string = "bcd"
+  res = string <= "abc"
+  ! res .eqv. .false.
 
-res = string <= "bcd"
-! res .eqv. .true.
+  res = string <= "bcd"
+  ! res .eqv. .true.
 
-res = string <= "cde"
-! res .eqv. .true.
-end
+  res = string <= "cde"
+  ! res .eqv. .true.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator equal
 
-Compare two character sequences for equality.
-
 #### Description
+
+Compare two character sequences for equality.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic `operator(.eq.)`.
+This defines three procedures overloading the intrinsic `operator(==)`
+and `operator(.eq.)`.
 
 #### Syntax
 
 `res = lhs == rhs`
+
+`res = lhs .eq. rhs`
 
 #### Status
 
@@ -1256,7 +1298,7 @@ Experimental
 
 #### Class
 
-Elemental function, `operator(.eq.)`.
+Elemental function, `operator(==)` and `operator(.eq.)`.
 
 #### Argument
 
@@ -1270,38 +1312,42 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = string == "abc"
-! res .eqv. .false.
+  string = "bcd"
+  res = string == "abc"
+  ! res .eqv. .false.
 
-res = string == "bcd"
-! res .eqv. .true.
+  res = string == "bcd"
+  ! res .eqv. .true.
 
-res = string == "cde"
-! res .eqv. .false.
-end
+  res = string == "cde"
+  ! res .eqv. .false.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Comparison operator not equal
 
-Compare two character sequences for inequality.
-
 #### Description
+
+Compare two character sequences for inequality.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
-This defines three procedures overloading the intrinsic `operator(.ne.)`.
+This defines three procedures overloading the intrinsic `operator(/=)`
+and `operator(.ne.)`.
 
 #### Syntax
 
 `res = lhs /= rhs`
+
+`res = lhs .ne. rhs`
 
 #### Status
 
@@ -1309,7 +1355,7 @@ Experimental
 
 #### Class
 
-Elemental function, `operator(.ne.)`.
+Elemental function, `operator(/=)` and `operator(.ne.)`.
 
 #### Argument
 
@@ -1323,30 +1369,31 @@ The result is a default logical scalar value.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-logical :: res
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  logical :: res
 
-string = "bcd"
-res = string /= "abc"
-! res .eqv. .true.
+  string = "bcd"
+  res = string /= "abc"
+  ! res .eqv. .true.
 
-res = string /= "bcd"
-! res .eqv. .false.
+  res = string /= "bcd"
+  ! res .eqv. .false.
 
-res = string /= "cde"
-! res .eqv. .true.
-end
+  res = string /= "cde"
+  ! res .eqv. .true.
+end program demo
 ```
 
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
 ### Concatenation operator
 
-Concatenate two character sequences.
-
 #### Description
+
+Concatenate two character sequences.
 
 The left-hand side, the right-hand side or both character sequences can
 be represented by a string type.
@@ -1376,14 +1423,15 @@ The result is an instance of `string_type`.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
 
-string = "Hello, "
-string = string // "World!"
-! len(string) == 13
-end
+  string = "Hello, "
+  string = string // "World!"
+  ! len(string) == 13
+end program demo
 ```
 
 
@@ -1420,20 +1468,21 @@ Unformatted user defined derived type output.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: io
+  string = "Important saved value"
 
-open(newunit=io, form="unformatted", status="scratch")
-write(io) string
+  open(newunit=io, form="unformatted", status="scratch")
+  write(io) string
 
-rewind(io)
+  rewind(io)
 
-read(io) string
-close(io)
-end
+  read(io) string
+  close(io)
+end program demo
 ```
 
 <!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -->
@@ -1476,21 +1525,22 @@ Formatted user defined derived type output.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: io
+  string = "Important saved value"
 
-open(newunit=io, form="formatted", status="scratch")
-write(io, *) string
-write(io, *)
+  open(newunit=io, form="formatted", status="scratch")
+  write(io, *) string
+  write(io, *)
 
-rewind(io)
+  rewind(io)
 
-read(io, *) string
-close(io)
-end
+  read(io, *) string
+  close(io)
+end program demo
 ```
 
 
@@ -1529,20 +1579,21 @@ Unformatted derived type input.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: io
+  string = "Important saved value"
 
-open(newunit=io, form="unformatted", status="scratch")
-write(io) string
+  open(newunit=io, form="unformatted", status="scratch")
+  write(io) string
 
-rewind(io)
+  rewind(io)
 
-read(io) string
-close(io)
-end
+  read(io) string
+  close(io)
+end program demo
 ```
 
 
@@ -1589,19 +1640,20 @@ Formatted derived type input.
 #### Example
 
 ```fortran
-use stdlib_string_type
-implicit none
-type(string_type) :: string
-integer :: io
-string = "Important saved value"
+program demo
+  use stdlib_string_type
+  implicit none
+  type(string_type) :: string
+  integer :: io
+  string = "Important saved value"
 
-open(newunit=io, form="formatted", status="scratch")
-write(io, *) string
-write(io, *)
+  open(newunit=io, form="formatted", status="scratch")
+  write(io, *) string
+  write(io, *)
 
-rewind(io)
+  rewind(io)
 
-read(io, *) string
-close(io)
-end
+  read(io, *) string
+  close(io)
+end program demo
 ```
