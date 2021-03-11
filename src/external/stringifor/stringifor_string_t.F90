@@ -3552,46 +3552,6 @@ contains
    endfunction character_concat_string_string
 
    ! IO
-   subroutine read_formatted(self, unit, iotype, v_list, iostat, iomsg)
-   !< Formatted input.
-   !<
-   !< @bug Change temporary acks: find a more precise length of the input string and avoid the trimming!
-   !<
-   !< @bug Read listdirected with and without delimiters does not work.
-   class(string),             intent(inout) :: self         !< The string.
-   integer,                   intent(in)    :: unit        !< Logical unit.
-   character(len=*),          intent(in)    :: iotype      !< Edit descriptor.
-   integer,                   intent(in)    :: v_list(:)   !< Edit descriptor list.
-   integer,                   intent(out)   :: iostat      !< IO status code.
-   character(len=*),          intent(inout) :: iomsg       !< IO status message.
-   character(len=len(iomsg))                :: local_iomsg !< Local variant of iomsg, so it doesn't get inappropriately redefined.
-   character(kind=CK, len=1)                :: delim       !< String delimiter, if any.
-   character(kind=CK, len=100)              :: temporary   !< Temporary storage string.
-
-   if (iotype == 'LISTDIRECTED') then
-      call get_next_non_blank_character_any_record(unit=unit, ch=delim, iostat=iostat, iomsg=iomsg)
-      if (iostat/=0) return
-      if (delim=='"'.OR.delim=="'") then
-         call self%read_delimited(unit=unit, delim=delim, iostat=iostat, iomsg=local_iomsg)
-      else
-         ! step back before the non-blank
-         read(unit, "(TL1)", iostat=iostat, iomsg=iomsg)
-         if (iostat /= 0) return
-         call self%read_undelimited_listdirected(unit=unit, iostat=iostat, iomsg=local_iomsg)
-      endif
-      if (is_iostat_eor(iostat)) then
-         ! suppress IOSTAT_EOR
-         iostat = 0
-      elseif (iostat /= 0) then
-         iomsg = local_iomsg
-      endif
-      return
-   else
-      read(unit, "(A)", iostat=iostat, iomsg=iomsg)temporary
-      self%raw = trim(temporary)
-   endif
-   endsubroutine read_formatted
-
    subroutine read_delimited(self, unit, delim, iostat, iomsg)
    !< Read a delimited string from a unit connected for formatted input.
    !<
@@ -3761,40 +3721,6 @@ contains
    endif
    endfunction replace_one_occurrence
 
-   ! non type-bound-procedures
-   subroutine get_delimiter_mode(unit, delim, iostat, iomsg)
-   !< Get the DELIM changeable connection mode for the given unit.
-   !<
-   !< If the unit is connected to an internal file, then the default value of NONE is always returned.
-   use, intrinsic :: iso_fortran_env, only : iostat_inquire_internal_unit
-   integer,                   intent(in)    :: unit         !< The unit for the connection.
-   character(len=1, kind=CK), intent(out)   :: delim        !< Represents the value of the DELIM mode.
-   integer,                   intent(out)   :: iostat       !< IOSTAT error code, non-zero on error.
-   character(*),              intent(inout) :: iomsg        !< IOMSG explanatory message - only defined if iostat is non-zero.
-   character(10)                            :: delim_buffer !< Buffer for INQUIRE about DELIM, sized for APOSTROHPE.
-   character(len(iomsg))                    :: local_iomsg  !< Local variant of iomsg, so it doesn't get inappropriately redefined.
-
-   ! get the string representation of the changeable mode
-   inquire(unit, delim=delim_buffer, iostat=iostat, iomsg=local_iomsg)
-   if (iostat == iostat_inquire_internal_unit) then
-      ! no way of determining the DELIM mode for an internal file
-      iostat = 0
-      delim = ''
-      return
-   elseif (iostat /= 0) then
-      iomsg = local_iomsg
-      return
-   endif
-   ! interpret the DELIM string
-   if (delim_buffer == 'QUOTE') then
-      delim = '"'
-   elseif (delim_buffer == 'APOSTROPHE') then
-      delim = ''''
-   else
-      delim = '"'
-   endif
-   endsubroutine get_delimiter_mode
-
    subroutine get_next_non_blank_character_this_record(unit, ch, iostat, iomsg)
    !< Get the next non-blank character in the current record.
    integer,                   intent(in)    :: unit   !< Logical unit.
@@ -3813,31 +3739,6 @@ contains
    enddo
    endsubroutine get_next_non_blank_character_this_record
 
-   subroutine get_next_non_blank_character_any_record(unit, ch, iostat, iomsg)
-   !< Get the next non-blank character, advancing records if necessary.
-   integer,                   intent(in)    :: unit        !< Logical unit.
-   character(kind=CK, len=1), intent(out)   :: ch          !< The non-blank character read. Not valid if IOSTAT is non-zero.
-   integer,                   intent(out)   :: iostat      !< IO status code.
-   character(kind=CK, len=*), intent(inout) :: iomsg       !< IO status message.
-   character(len(iomsg))                    :: local_iomsg !< Local variant of iomsg, so it doesn't get inappropriately redefined.
-
-   do
-      call get_next_non_blank_character_this_record(unit=unit, ch=ch, iostat=iostat, iomsg=local_iomsg)
-      if (is_iostat_eor(iostat)) then
-         ! try again on the next record
-         read (unit, "(/)", iostat=iostat, iomsg=iomsg)
-         if (iostat /= 0) return
-      elseif (iostat /= 0) then
-         ! some sort of problem
-         iomsg = local_iomsg
-         return
-      else
-         ! got it
-         exit
-      endif
-   enddo
-   endsubroutine get_next_non_blank_character_any_record
-
    subroutine get_decimal_mode(unit, decimal_point, iostat, iomsg)
    !< Get the DECIMAL changeable connection mode for the given unit.
    !<
@@ -3849,7 +3750,7 @@ contains
    integer,                   intent(out)   :: iostat         !< IO status code.
    character(kind=CK, len=*), intent(inout) :: iomsg          !< IO status message.
    character(5)                             :: decimal_buffer !< Buffer for INQUIRE about DECIMAL, sized for POINT or COMMA.
-   character(len(iomsg))                    :: local_iomsg    !< Local iomsg, so it doesn't get inappropriately redefined.
+   character(512)                    :: local_iomsg    !< Local iomsg, so it doesn't get inappropriately redefined.
 
    inquire(unit, decimal=decimal_buffer, iostat=iostat, iomsg=local_iomsg)
    if (iostat == iostat_inquire_internal_unit) then
@@ -3858,7 +3759,7 @@ contains
       decimal_point = .true.
       return
    else if (iostat /= 0) then
-      iomsg = local_iomsg
+      iomsg = trim(local_iomsg)
       return
    endif
    decimal_point = decimal_buffer == 'POINT'
