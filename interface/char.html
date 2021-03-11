@@ -59,7 +59,7 @@
         <ul class="dropdown-menu">
           
               
-            <li><a href="../sourcefile/stdlib_string_type.f90.html">Source File</a></li>
+            <li><a href="../sourcefile/stdlib_string_class.f90.html">Source File</a></li>
         
         
         
@@ -77,7 +77,7 @@
             </li>
 
 
-<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/stdlib_string_type.f90.html">Source File</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/stdlib_string_class.f90.html">Source File</a></li>
 
 
 
@@ -128,21 +128,21 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="<p> 4.3% of total for procedures.</p>Including implementation: 23 statements, 19.7% of total for procedures.">5 statements</a>
+    title="<p> 6.4% of total for procedures.</p>Including implementation: 23 statements, 29.5% of total for procedures.">5 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/stdlib_string_type.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/stdlib_string_class.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/stdlib_string_type.f90.html'>stdlib_string_type.f90</a></li>
+     <li><a href='../sourcefile/stdlib_string_class.f90.html'>stdlib_string_class.f90</a></li>
     
-     <li><a href='../module/stdlib_string_type.html'>stdlib_string_type</a></li>
+     <li><a href='../module/stdlib_string_class.html'>stdlib_string_class</a></li>
     
   
      <li class="active">char</li>
@@ -190,11 +190,11 @@
   <div id="modprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_string">char_string</a>
+      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_object">char_object</a>
       
-      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_string_pos">char_string_pos</a>
+      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_object_pos">char_object_pos</a>
       
-      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_string_range">char_string_range</a>
+      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_object_range">char_object_range</a>
       
     </div>
   </div>
@@ -244,11 +244,11 @@
   <div id="modprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_string">char_string</a>
+      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_object">char_object</a>
       
-      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_string_pos">char_string_pos</a>
+      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_object_pos">char_object_pos</a>
       
-      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_string_range">char_string_range</a>
+      <a class="list-group-item" href="../interface/char.html#moduleprocedure-char_object_range">char_object_range</a>
       
     </div>
   </div>
@@ -269,8 +269,8 @@
    
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-char_string"></span><h3>
-private pure function char_string(string) result(character_string)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-char_object"></span><h3>
+private pure function char_object(string) result(character_string)
     
     
    
@@ -302,7 +302,7 @@ private pure function char_string(string) result(character_string)
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -333,8 +333,8 @@ private pure function char_string(string) result(character_string)
    
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-char_string_pos"></span><h3>
-private elemental function char_string_pos(string, pos) result(character_string)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-char_object_pos"></span><h3>
+private elemental function char_object_pos(string, pos) result(character_string)
     
     
    
@@ -366,7 +366,7 @@ private elemental function char_string_pos(string, pos) result(character_string)
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -412,8 +412,8 @@ private elemental function char_string_pos(string, pos) result(character_string)
    
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-char_string_range"></span><h3>
-private pure function char_string_range(string, start, last) result(character_string)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-char_object_range"></span><h3>
+private pure function char_object_range(string, start, last) result(character_string)
     
     
    
@@ -445,7 +445,7 @@ private pure function char_string_range(string, start, last) result(character_st
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -521,7 +521,7 @@ private pure function char_string_range(string, start, last) result(character_st
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-03-02 18:35  
+             on 2021-03-11 20:46  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> stdlib_string was developed by fortran-lang/stdlib contributors</p></div>

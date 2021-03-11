@@ -59,7 +59,7 @@
         <ul class="dropdown-menu">
           
               
-            <li><a href="../sourcefile/stdlib_string_type.f90.html">Source File</a></li>
+            <li><a href="../sourcefile/stdlib_string_class.f90.html">Source File</a></li>
         
         
         
@@ -77,7 +77,7 @@
             </li>
 
 
-<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/stdlib_string_type.f90.html">Source File</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="../sourcefile/stdlib_string_class.f90.html">Source File</a></li>
 
 
 
@@ -128,21 +128,21 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title="<p> 4.3% of total for procedures.</p>Including implementation: 23 statements, 19.7% of total for procedures.">5 statements</a>
+    title="<p> 9.0% of total for procedures.</p>Including implementation: 37 statements, 47.4% of total for procedures.">7 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/stdlib_string_type.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/stdlib_string_class.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/stdlib_string_type.f90.html'>stdlib_string_type.f90</a></li>
+     <li><a href='../sourcefile/stdlib_string_class.f90.html'>stdlib_string_class.f90</a></li>
     
-     <li><a href='../module/stdlib_string_type.html'>stdlib_string_type</a></li>
+     <li><a href='../module/stdlib_string_class.html'>stdlib_string_class</a></li>
     
   
      <li class="active">lgt</li>
@@ -190,11 +190,15 @@
   <div id="modprocs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_string_string">lgt_string_string</a>
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_object_object">lgt_object_object</a>
       
-      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_string_char">lgt_string_char</a>
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_object_string">lgt_object_string</a>
       
-      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_char_string">lgt_char_string</a>
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_string_object">lgt_string_object</a>
+      
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_object_char">lgt_object_char</a>
+      
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_char_object">lgt_char_object</a>
       
     </div>
   </div>
@@ -246,11 +250,15 @@
   <div id="modprocs-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_string_string">lgt_string_string</a>
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_object_object">lgt_object_object</a>
       
-      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_string_char">lgt_string_char</a>
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_object_string">lgt_object_string</a>
       
-      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_char_string">lgt_char_string</a>
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_string_object">lgt_string_object</a>
+      
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_object_char">lgt_object_char</a>
+      
+      <a class="list-group-item" href="../interface/lgt.html#moduleprocedure-lgt_char_object">lgt_char_object</a>
       
     </div>
   </div>
@@ -271,8 +279,8 @@
    
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_string_string"></span><h3>
-private elemental function lgt_string_string(lhs, rhs) result(is_lgt)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_object_object"></span><h3>
+private elemental function lgt_object_object(lhs, rhs) result(is_lgt)
     
     
    
@@ -283,8 +291,7 @@ private elemental function lgt_string_string(lhs, rhs) result(is_lgt)
 
 
 
-<p>Lexically compare two character sequences for being greater.
- In this version both character sequences are by a string.</p>
+<p>Lexically compare two character sequences for being greater.</p>
     
     <h4>Arguments</h4>
     
@@ -305,7 +312,7 @@ private elemental function lgt_string_string(lhs, rhs) result(is_lgt)
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -320,7 +327,7 @@ private elemental function lgt_string_string(lhs, rhs) result(is_lgt)
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -351,8 +358,8 @@ private elemental function lgt_string_string(lhs, rhs) result(is_lgt)
    
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_string_char"></span><h3>
-private elemental function lgt_string_char(lhs, rhs) result(is_lgt)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_object_string"></span><h3>
+private elemental function lgt_object_string(lhs, rhs) result(is_lgt)
     
     
    
@@ -363,8 +370,7 @@ private elemental function lgt_string_char(lhs, rhs) result(is_lgt)
 
 
 
-<p>Lexically compare two character sequences for being greater.
- In this version the left-hand side character sequences is by a string.</p>
+<p>Lexically compare two character sequences for being greater.</p>
     
     <h4>Arguments</h4>
     
@@ -385,7 +391,165 @@ private elemental function lgt_string_char(lhs, rhs) result(is_lgt)
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>lhs</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(string_type),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>rhs</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>logical
+  </small></h4>
+  
+    
+
+  </div>
+  </div>
+
+   
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_string_object"></span><h3>
+private elemental function lgt_string_object(lhs, rhs) result(is_lgt)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+<p>Lexically compare two character sequences for being greater.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>type(string_type),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>lhs</strong></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>rhs</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+      
+    
+    
+
+  
+  
+  
+  
+     <h4>Return Value <small>logical
+  </small></h4>
+  
+    
+
+  </div>
+  </div>
+
+   
+    
+  <div class="panel panel-default">
+  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_object_char"></span><h3>
+private elemental function lgt_object_char(lhs, rhs) result(is_lgt)
+    
+    
+   
+</h3></div>
+  <div class="panel-body">
+       
+    
+
+
+
+<p>Lexically compare two character sequences for being greater.</p>
+    
+    <h4>Arguments</h4>
+    
+      
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -431,8 +595,8 @@ private elemental function lgt_string_char(lhs, rhs) result(is_lgt)
    
     
   <div class="panel panel-default">
-  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_char_string"></span><h3>
-private elemental function lgt_char_string(lhs, rhs) result(is_lgt)
+  <div class="panel-heading codesum"><span class="anchor" id="proc-lgt_char_object"></span><h3>
+private elemental function lgt_char_object(lhs, rhs) result(is_lgt)
     
     
    
@@ -443,8 +607,7 @@ private elemental function lgt_char_string(lhs, rhs) result(is_lgt)
 
 
 
-<p>Lexically compare two character sequences for being greater.
- In this version the right-hand side character sequences is by a string.</p>
+<p>Lexically compare two character sequences for being greater.</p>
     
     <h4>Arguments</h4>
     
@@ -480,7 +643,7 @@ private elemental function lgt_char_string(lhs, rhs) result(is_lgt)
   
 <tr>
   
-  <td><span class="anchor" ></span>type(<a href='../type/string_type.html'>string_type</a>),</td>
+  <td><span class="anchor" ></span>class(<a href='../type/string_class.html'>string_class</a>),</td>
   <td>intent(in)</td>
   <td></td>
   
@@ -526,7 +689,7 @@ private elemental function lgt_char_string(lhs, rhs) result(is_lgt)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2021-03-02 18:35  
+             on 2021-03-11 20:46  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> stdlib_string was developed by fortran-lang/stdlib contributors</p></div>
