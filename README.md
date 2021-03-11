@@ -36,3 +36,8 @@ Preliminary specs are available [here](./doc/specs/stdlib_string_class.md).
 ## License
 
 This project is available under the [MIT license](./LICENSE).
+
+``ftlString`` is part of the [Fortran template library](https://github.com/SCM-NV/ftl) licensed under LGPL-3.0-or-later.
+
+``stringiFor`` is part of the [StringiFor library](https://github.com/szaghi/StringiFor) licensed under GPL-3.0-or-later OR BSD-3-Clause OR BSD-2-Clause OR MIT.
+``PENF`` is part of the [PENF library](https://github.com/szaghi/PENF) licensed under GPL-3.0-or-later OR BSD-3-Clause OR BSD-2-Clause OR MIT.
